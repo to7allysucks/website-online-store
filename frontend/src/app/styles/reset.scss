@@ -1,0 +1,62 @@
+* {
+    font-family: 'BeatriceDeckTrial', sans-serif;
+    padding: 0px;
+    margin: 0px;
+    border: none;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+a,
+a:link,
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    font-size: inherit;
+    font-weight: inherit;
+}
+
+img,
+svg {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+label {
+    cursor: pointer;
+}
+
+ul,
+ol {
+    list-style-type: none;
+}
+
+button {
+    background: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}

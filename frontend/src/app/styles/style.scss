@@ -1,0 +1,9 @@
+@use 'reset';
+@use 'fonts';
+@use 'vars';
+@use 'px';
+
+
+body {
+  background-image: url("../../shared/assets/images/background.svg");
+}
