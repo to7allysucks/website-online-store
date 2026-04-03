@@ -1,0 +1,91 @@
+@use '../../../app/styles/vars';
+@use '../../../app/styles/px';
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-block: px.$px30;
+  align-items: center;
+}
+
+.nav {
+  display: flex;
+  gap: px.$px30;
+  color: vars.$color-black;
+  align-items: center;
+}
+.logo {
+  max-height: px.$px50;
+  max-width: px.$px50;
+}
+
+.navActions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: px.$px50;
+}
+
+.like {
+  padding: px.$px16;
+  background-color: vars.$color-black;
+  border-radius: 50%;
+  transition: all vars.$transition-duration ease;
+}
+
+.like:hover {
+  rotate: 45deg;
+}
+
+.like > img {
+  align-items: center;
+  text-align: center;
+  max-width: px.$px15;
+  max-height: px.$px15;
+}
+
+.cartWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.cartWrapper > span {
+  font-size: px.$px12;
+  background-color: vars.$color-black;
+  color: vars.$color-white;
+  border-radius: px.$px22;
+  padding: px.$px16 px.$px22;
+  align-items: center;
+  text-align: center;
+  margin-right: -(px.$px10);
+}
+
+
+.cartWrapper > div {
+  padding: px.$px14;
+  background-color: vars.$color-white;
+  border-radius: 50%;
+  border: px.$px7 solid vars.$color-black;
+}
+
+.cartWrapper > div > img {
+  max-width: px.$px16;
+  max-height: px.$px16;
+}
+
+.burger {
+  display: none;
+}
+
+.profile {
+  background-color: vars.$color-black;
+  border-radius: 50%;
+  padding: px.$px16;
+}
+
+.profile > img {
+  align-items: center;
+  text-align: center;
+  max-width: px.$px15;
+  max-height: px.$px15;
+}

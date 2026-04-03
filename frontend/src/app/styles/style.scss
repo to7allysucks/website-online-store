@@ -6,4 +6,14 @@
 
 body {
   background-image: url("../../shared/assets/images/background.svg");
+  padding-inline: px.$px50;
+  font-size: px.$px16;
+}
+
+header,main,footer {
+  opacity: 1;
+}
+
+a {
+  color: vars.$color-black;
 }
