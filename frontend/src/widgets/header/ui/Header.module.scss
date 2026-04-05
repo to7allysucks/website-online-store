@@ -1,5 +1,6 @@
 @use '../../../app/styles/vars';
 @use '../../../app/styles/px';
+@use '../../../app/styles/mixins';
 
 .header {
   display: flex;
@@ -77,15 +78,85 @@
   display: none;
 }
 
+
 .profile {
   background-color: vars.$color-black;
   border-radius: 50%;
-  padding: px.$px16;
+  padding: px.$px20;
 }
 
 .profile > img {
   align-items: center;
   text-align: center;
-  max-width: px.$px15;
-  max-height: px.$px15;
+  max-width: px.$px16;
+  max-height: px.$px16;
+}
+
+@include mixins.tablets {
+
+  .header {
+    margin-top: 30px;
+  }
+
+  .like {
+    display: none;
+  }
+
+  .cartWrapper > span {
+    display: none;
+  }
+  .cartWrapper > div {
+    border: 6px solid black;
+    padding: 10px;
+  }
+
+  .cartWrapper > div > img {
+    max-height: 20px;
+    max-width: 20px;
+  }
+
+  .logo {
+    max-height: 50px;
+    max-width: 50px;
+  }
+
+  .profile {
+    padding: 16px;
+  }
+  .profile > img {
+    max-width: 30px;
+    max-height: 30px;
+  }
+
+  .navItem {
+    display: none;
+  }
+
+  .burger {
+    display: block;
+    width: 40px;
+    height: 40px;
+    position: relative;
+  }
+
+  .burger > span {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 4px;
+    border-radius: 3px;
+    background-color: black;
+  }
+
+  .burger > span:nth-child(1) {
+    width: 80%;
+    transform: rotateY(10px);
+  }
+  .burger > span:nth-child(2) {
+    transform: translateY(-10px);
+  }
+  .burger > span:nth-child(3) {
+    width: 60%;
+    transform: translateY(10px);
+  }
 }

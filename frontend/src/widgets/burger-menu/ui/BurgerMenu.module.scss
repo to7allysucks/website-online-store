@@ -1,0 +1,67 @@
+@use '../../../app/styles/vars';
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: darken(grey, 0.3);
+  opacity: 0;
+  z-index: 99;
+  visibility: hidden;
+  transition: vars.$transition-duration all ease;
+
+  &.overlayVisible {
+    opacity: 0.7;
+    visibility: visible;
+  }
+}
+
+.menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 70vw;
+  height: 100vh;
+  background: white;
+  padding-left: 10px;
+  padding-top: 30px;
+  transform: translateX(-100vw);
+  transition: vars.$transition-duration all ease;
+  z-index: 100;
+
+  &.menuOpen {
+    transform: translateX(0);
+  }
+}
+
+
+.closeBtn {
+  display: block;
+  width: 50px;
+  height: 50px;
+  position: relative;
+  margin-bottom: 50px;
+
+  & > span {
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 6px;
+    background-color: black;
+    border-radius: 4px;
+  }
+
+  & > span:nth-child(1) {
+    transform: rotate(45deg);
+  }
+  & > span:nth-child(2) {
+    transform: rotate(-45deg);
+  }
+}
+
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  font-size: 24px;
+}
