@@ -9,11 +9,3 @@ class Category(Base):
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     name = Column(String, nullable=False)
     slug = Column(String, unique=True)
-
-class Collection(Base):
-    __tablename__ = "collections"
-
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    name = Column(String, nullable=False)
-    slug = Column(String, unique=True)
-    season = Column(String)
