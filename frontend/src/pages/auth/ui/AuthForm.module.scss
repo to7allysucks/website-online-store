@@ -1,0 +1,43 @@
+@use '../../../app/styles/vars.scss';
+@use '../../../app/styles/mixins.scss';
+@use '../../../app/styles/px.scss';
+
+.page {
+    width: 40%;
+    margin-inline: auto;
+    margin-block: auto;
+    padding: px.$px30;
+    border: px.$px3 solid vars.$color-black;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: px.$px5;
+    justify-content: space-between;
+}
+
+h2 {
+    font-size: px.$px32;
+    font-weight: 700;
+}
+
+label {
+    font-size: px.$px18;
+    margin-top: px.$px16;
+}
+
+input {
+    padding: px.$px10 px.$px20;
+
+    &::placeholder {
+        font-size: px.$px16;
+    }
+}
+
+
+.btnSubmit {
+    width: 100%;
+    padding: px.$px10;
+    border: px.$px1 solid vars.$color-black;
+}

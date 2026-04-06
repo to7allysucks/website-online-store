@@ -1,11 +1,20 @@
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+<<<<<<< Updated upstream
 from api.product import router as product_router
 
 app = FastAPI(title="Cloth Online Store API")
 
 app.include_router(product_router)
+=======
+from fastapi import APIRouter
+from api.product import router as product
+
+app = FastAPI(title="Cloth Online Store API")
+
+app.include_router(product)
+>>>>>>> Stashed changes
 
 app.add_middleware(
     CORSMiddleware,

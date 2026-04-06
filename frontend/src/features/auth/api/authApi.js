@@ -6,8 +6,13 @@ export const authApi = {
     return response.data
   },
 
-  login: async () => {
-    const response = await api.get('./auth/me')
+  login: async (data) => {
+    const response = await api.post('./auth/login', data)
+    return response.data
+  },
+
+  getMe: async () => {
+    const response = await api.get('./auth/me', data)
     return response.data
   }
 }

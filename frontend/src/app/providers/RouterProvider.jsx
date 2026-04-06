@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ROUTES } from "../../shared/config/routes.js";
 import Header from '../../widgets/header';
-import CatalogPage from "../../pages/catalog";
+import ProductsPage from "../../pages/Products";
 import ProductPage from "../../pages/product";
 import CartPage from "../../pages/cart";
 import CheckOutPage from "../../pages/checkout";
@@ -24,7 +24,7 @@ const router = createBrowserRouter([
     path: ROUTES.HOME, element: <Layout><HomePage /></Layout>
   },
   {
-    path: ROUTES.CATALOG, element: <Layout><CatalogPage /></Layout>
+    path: ROUTES.PRODUCTS, element: <Layout><ProductsPage /></Layout>
   },
   {
     path: ROUTES.PRODUCT, element: <Layout><ProductPage /></Layout>

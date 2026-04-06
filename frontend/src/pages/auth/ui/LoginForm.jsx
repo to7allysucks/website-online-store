@@ -3,11 +3,11 @@ import { authApi } from "../../../features/auth/api/authApi.js";
 import { useAuthStore } from "../../../features/auth/model/authStore.js";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../../shared/config/routes.js";
-import styles from './LoginForm.module.scss'
+import styles from './AuthForm.module.scss';
 
 export const LoginForm = (props) => {
   const {
-    onswitch,
+    onSwitch,
   } = props
 
   const [email, setEmail] = useState('')
@@ -20,11 +20,47 @@ export const LoginForm = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
+
+    try {
+      const {access_token} = await authApi.login({email, password})
+      
+      const user = await authApi.getMe()
+
+      setAuth(user, access_token)
+      navigate(ROUTES.HOME)
+    }
+
+    catch {
+      setError('Ошибка')
+    }
   }
 
   return (
-    <div>
-      LoginForm
-    </div>
+    <form className={styles.form}>
+      <h2>Log In</h2>
+      {error && <p className={styles.error}>{error}</p>}
+
+      <label htmlFor="email">Email</label>
+      <input 
+      type="email" 
+      name="email"
+      placeholder="Email"
+      value={email}
+      onChange={ (e) => setEmail(e.target.value)}/>
+
+      <label htmlFor="password">Password</label>
+      <input 
+      type="password"
+      name="password"
+      placeholder="Password"
+      value={password}
+      onChange={ (e) => setPassword(e.target.value) } />
+
+      <button onClick={handleSubmit} className={styles.btnSubmit}>Login</button>
+
+      <p>
+        Dont have account? <span onClick={onSwitch}>Register</span>
+      </p>
+    </form>
   );
 };
