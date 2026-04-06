@@ -10,7 +10,7 @@ export const BurgerMenu = (props) => {
 
   return (
     <>
-      <div className={`${styles.overlay} ${isOpen ? styles.overlayVisible : ''}`}></div>
+      <div className={`${styles.overlay} ${isOpen ? styles.overlayVisible : ''}`} onClick={onClose}></div>
       <div className={`${styles.menu} ${isOpen ? styles.menuOpen : ''}`}>
         <button className={styles.closeBtn} onClick={onClose}>
           <span></span>

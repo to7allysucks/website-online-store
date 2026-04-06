@@ -1,1 +1,1 @@
-export { default } from './ui/Header.jsx'
+export { default as Header } from './ui/Header.jsx'

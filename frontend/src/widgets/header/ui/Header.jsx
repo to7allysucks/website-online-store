@@ -12,32 +12,32 @@ const Header = () => {
   const { isOpen, toggle, close } = useBurgerMenu()
 
   return (
-    <header className={styles.header}>
-      <div className={styles.nav}>
-        <button className={styles.burger} onClick={toggle}>
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-        <NavLink className={styles.navItem} to={ROUTES.HOME}>Home</NavLink>
-        <NavLink className={styles.navItem} to={ROUTES.CATALOG}>Catalog</NavLink>
-        <NavLink className={styles.navItem} to={ROUTES.CATALOG}>New</NavLink>
-      </div>
+    <>
+      <header className={styles.header}>
+        <div className={styles.nav}>
+          <button className={styles.burger} onClick={toggle}>
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+          <NavLink className={styles.navItem} to={ROUTES.HOME}>Home</NavLink>
+          <NavLink className={styles.navItem} to={ROUTES.CATALOG}>Catalog</NavLink>
+          <NavLink className={styles.navItem} to={ROUTES.CATALOG}>New</NavLink>
+        </div>
 
-      <div className={styles.logo}><img src={Logo} alt="logo"/></div>
+        <div className={styles.logo}><img src={Logo} alt="logo"/></div>
 
-      <div className={styles.navActions}>
-        <Link  to={ROUTES.CART} className={styles.like}><img src={Like} alt="like"/></Link>
-        <Link to={ROUTES.CART} className={styles.cartWrapper}>
-          <span>Cart</span>
-          <div><img src={Cart} alt="cart"/></div>
-        </Link>
-        <Link to={ROUTES.PROFILE} className={styles.profile}><img src={Profile} alt="profile"/></Link>
-      </div>
-
+        <div className={styles.navActions}>
+          <Link  to={ROUTES.CART} className={styles.like}><img src={Like} alt="like"/></Link>
+          <Link to={ROUTES.CART} className={styles.cartWrapper}>
+            <span>Cart</span>
+            <div><img src={Cart} alt="cart"/></div>
+          </Link>
+          <Link to={ROUTES.PROFILE} className={styles.profile}><img src={Profile} alt="profile"/></Link>
+        </div>
+      </header>
       <BurgerMenu isOpen={isOpen} onClose={close}/>
-
-    </header>
+    </>
   );
 };
 
