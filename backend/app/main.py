@@ -15,7 +15,7 @@ app.add_middleware(
     allow_headers=['*'],
 )
 
-@app.get('/health', summary='Health')
+@app.get('/health', summary='Health', tags=['Root'])
 def health():
     return {"success": "OK"}
 
