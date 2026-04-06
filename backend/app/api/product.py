@@ -1,10 +1,21 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends, Query
+from sqlalchemy.ext.asyncio import AsyncSession
+from backend.app.core.database import get_db
 
-router = APIRouter(prefix='/products', tags=['Products'])
+
+router = APIRouter(prefix='/api/products', tags=['Products'])
 
 @router.get('/')
-async def get_catalog(category: str = None):
-    return {'products': []}
+async def get_products(
+    db: AsyncSession = Depends(get_db),
+    category: str = Query(None),
+    size: str = Query(None),
+    color: str = Query(None),
+    min_price: float = Query(None),
+    max_price: float = Query(None),
+    search: str = Query(None),
+):
+    return []
 
 @router.get('/{id}')
 async def get_product(id: int):
