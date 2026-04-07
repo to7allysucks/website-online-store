@@ -10,7 +10,7 @@ export const RegisterForm = (props) => {
     onSwitch
   } = props
 
-  const [FormData, setformData] = useState({
+  const [formData, setFormData] = useState({
     'email': '',
     'password': '',
     'first_name': '',
@@ -22,7 +22,7 @@ export const RegisterForm = (props) => {
   const navigate = useNavigate()
 
   const handleChange = (e) => {
-    setformData(prev => ({...prev, [e.target.name]: e.target.value}))
+    setFormData(prev => ({...prev, [e.target.name]: e.target.value}))
   }
 
   const handleSubmit = async (e) => {
@@ -30,11 +30,11 @@ export const RegisterForm = (props) => {
      setError('')
 
      try {
-      authApi.register(FormData)
+      await authApi.register(formData)
 
       const { access_token } = await authApi.login({
-          email: FormData.email,
-          password: FormData.password
+          email: formData.email,
+          password: formData.password
       })
 
       const user = await authApi.getMe()
@@ -44,50 +44,45 @@ export const RegisterForm = (props) => {
 
      }
      catch {
-      setError('Ошибка')
+      setError('error')
      }
   }
 
   return (
     <form className={styles.form}>
           <h2>Register</h2>
-          {error && <p className={styles.error}>{error}</p>}
     
           <label htmlFor="email">Email</label>
           <input 
           type="email" 
           name="email"
           placeholder="Email"
-          value={email}
-          onChange={ (e) => setEmail(e.target.value)}/>
+          onChange={handleChange}/>
     
           <label htmlFor="password">Password</label>
           <input 
           type="password"
           name="password"
           placeholder="Password"
-          value={password}
-          onChange={ (e) => setPassword(e.target.value) } />
+          onChange={handleChange}/>
 
           <label htmlFor="first_name">First Name</label>
           <input 
           type="text"
           name="first_name"
           placeholder="First Name"
-          value={first_name}
-          onChange={ (e) => setPassword(e.target.value) } />
+          onChange={handleChange}/>
 
           <label htmlFor="last_name">Last Name</label>
           <input 
           type="text"
           name="last_name"
           placeholder="Last Name"
-          value={last_name}
-          onChange={ (e) => setPassword(e.target.value) } />
-    
+          onChange={handleChange}/>
+          {error && <p className={styles.error}>{error}</p>}
           <button onClick={handleSubmit} className={styles.btnSubmit}>Register</button>
     
-          <p className={styles.hint}>
+          <p>
             Have a account?  <span onClick={onSwitch}>Log In</span>
           </p>
         </form>

@@ -36,7 +36,7 @@ const router = createBrowserRouter([
     path: ROUTES.CHECKOUT, element: <Layout><CheckOutPage /></Layout>
   },
   {
-    path: ROUTES.AUTH, element: <Layout><AuthPage /></Layout>
+    path: ROUTES.AUTH, element: <AuthPage />
   },
   {
     path: ROUTES.PROFILE, element: <Layout><ProfilePage /></Layout>

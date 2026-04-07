@@ -3,18 +3,20 @@
 @use '../../../app/styles/px.scss';
 
 .page {
-    width: 40%;
-    margin-inline: auto;
-    margin-block: auto;
-    padding: px.$px30;
-    border: px.$px3 solid vars.$color-black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
 .form {
     display: flex;
     flex-direction: column;
+    width: 30%;
     gap: px.$px5;
     justify-content: space-between;
+    padding: px.$px30;
+    border: px.$px3 solid vars.$color-black;
 }
 
 h2 {
@@ -40,4 +42,69 @@ input {
     width: 100%;
     padding: px.$px10;
     border: px.$px1 solid vars.$color-black;
+    margin-top: px.$px20;
+    transition: vars.$transition-duration all ease;
+    &:hover {
+        background-color: vars.$color-black;
+        color: vars.$color-white;
+    }
+}
+
+
+
+.error {
+    color: vars.$color-error;
+    font-size: px.$px16;
+    font-weight: 500;
+}
+
+p {
+    color: vars.$color-secondary;
+    margin-top: px.$px15;
+}
+span {
+    color: vars.$color-link;
+    cursor: pointer;
+}
+
+@include mixins.tablets() {
+    .form {
+        width: 80%;
+        max-height: 80%;
+        padding: 30px;
+        gap: 12px;
+        border: 2px solid vars.$color-black;
+    }
+
+    h2 {
+        font-size: 32px;
+    }
+
+    label {
+        font-size: 24px;
+    }
+
+    input {
+        font-size: 24px;
+        padding: 10px 20px;
+
+        &::placeholder {
+            font-size: 18px;
+        }
+    }
+
+    .btnSubmit {
+        font-size: 24px;
+        padding: 10px 20px;
+    }
+
+    .error {
+        font-size: 16px;
+    }
+
+    p {
+        display: flex;
+        justify-content: space-between;
+        font-size: 12px;
+    }
 }

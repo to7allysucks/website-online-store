@@ -31,15 +31,13 @@ export const LoginForm = (props) => {
     }
 
     catch {
-      setError('Ошибка')
+      setError('Error')
     }
   }
 
   return (
     <form className={styles.form}>
       <h2>Log In</h2>
-      {error && <p className={styles.error}>{error}</p>}
-
       <label htmlFor="email">Email</label>
       <input 
       type="email" 
@@ -55,8 +53,8 @@ export const LoginForm = (props) => {
       placeholder="Password"
       value={password}
       onChange={ (e) => setPassword(e.target.value) } />
-
-      <button onClick={handleSubmit} className={styles.btnSubmit}>Login</button>
+      {error && <p className={styles.error}>{error}</p>}
+      <button onClick={handleSubmit} className={styles.btnSubmit}>Log In</button>
 
       <p>
         Dont have account? <span onClick={onSwitch}>Register</span>
