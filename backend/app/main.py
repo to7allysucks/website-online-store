@@ -4,12 +4,6 @@ from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(title='Cloth Online Store API')
 
-from api.product import router as product_router
-from api.auth import router as auth_router
-
-app.include_router(product_router)
-app.include_router(auth_router)
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=['http://localhost:5173'],
@@ -17,6 +11,12 @@ app.add_middleware(
     allow_methods=['*'],
     allow_headers=['*'],
 )
+
+from api.product import router as product_router
+from api.auth import router as auth_router
+
+app.include_router(product_router)
+app.include_router(auth_router)
 
 @app.get('/health', summary='Health', tags=['Root'])
 def health():

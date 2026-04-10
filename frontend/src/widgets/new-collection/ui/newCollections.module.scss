@@ -1,0 +1,120 @@
+@use '../../../app/styles/vars';
+@use '../../../app/styles/px';
+@use '../../../app/styles/mixins';
+
+
+.sliderWrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: px.$px30;
+}
+
+.descriptionColl {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.sliderTitle {
+  display: flex;
+  flex-direction: column;
+  gap: px.$px5;
+  text-align: start;
+}
+
+.btnsWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.btnControl {
+  width: 100%;
+}
+
+.btnShop {
+  display: flex;
+  justify-content: space-between;
+  background-color: darken(vars.$color-white, 30%);
+  opacity: 0.7;
+  align-items: center;
+  padding: 10px 20px;
+  font-size: px.$px16;
+  font-weight: 400;
+  width: 60%;
+
+  > img {
+    max-width: px.$px70;
+    max-height: px.$px30;
+  }
+}
+
+.slider {
+  width: 60%;
+}
+
+.btnsNav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: px.$px10;
+
+
+  & > button {
+    padding: px.$px10;
+    border: px.$px1 solid vars.$color-black;
+
+    & > img {
+      width: px.$px20;
+      height: px.$px20;
+    }
+  }
+}
+
+.btnNext {
+  rotate: 180deg;
+}
+
+@include mixins.tablets() {
+
+  .sliderWrapper {
+    flex-direction: column;
+    width: 100%;
+    gap: 20px;
+  }
+
+
+  .btnsNav {
+    display: none;
+  }
+
+  .sliderTitle {
+
+    > h2 {
+      font-size: 48px !important;
+    }
+
+    > p {
+      font-size: 16px !important;
+    }
+  }
+
+  .slider {
+    width: 100%;
+  }
+
+  .btnShop {
+    font-size: 14px;
+    width: 50%;
+
+    & > img {
+      scale: 1.5;
+    }
+  }
+
+  .descriptionColl {
+    gap: 20px;
+  }
+}

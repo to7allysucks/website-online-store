@@ -17,3 +17,12 @@ header,main,footer {
 a {
   color: vars.$color-black;
 }
+h2 {
+  font-size: px.$px48 !important;
+  font-weight: 700 !important;
+}
+
+p {
+  font-size: px.$px16 !important;
+  font-weight: 300;
+}

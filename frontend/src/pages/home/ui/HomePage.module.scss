@@ -1,0 +1,9 @@
+@use '../../../app/styles/px.scss';
+
+
+.home {
+  display: flex;
+  flex-direction: column;
+  gap: px.$px70;
+  margin-top: px.$px40;
+}
