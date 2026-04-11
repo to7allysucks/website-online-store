@@ -49,12 +49,12 @@ export const NewCollections = () => {
             768: {slidesPerView: 3, spaceBetween: 20}
           }}
         >
-          <SwiperSlide><img src={img1} alt="img"/></SwiperSlide>
-          <SwiperSlide><img src={img2} alt="img"/></SwiperSlide>
-          <SwiperSlide><img src={img1} alt="img"/></SwiperSlide>
-          <SwiperSlide><img src={img2} alt="img"/></SwiperSlide>
-          <SwiperSlide><img src={img1} alt="img"/></SwiperSlide>
-          <SwiperSlide><img src={img2} alt="img"/></SwiperSlide>
+          <SwiperSlide className={styles.imgSlide}><img src='https://placehold.co/300x300' alt="img"/></SwiperSlide>
+          <SwiperSlide className={styles.imgSlide}><img src='https://placehold.co/300x300' alt="img"/></SwiperSlide>
+          <SwiperSlide className={styles.imgSlide}><img src='https://placehold.co/300x300' alt="img"/></SwiperSlide>
+          <SwiperSlide className={styles.imgSlide}><img src='https://placehold.co/300x300' alt="img"/></SwiperSlide>
+          <SwiperSlide className={styles.imgSlide}><img src='https://placehold.co/300x300' alt="img"/></SwiperSlide>
+          <SwiperSlide className={styles.imgSlide}><img src='https://placehold.co/300x300' alt="img"/></SwiperSlide>
         </Swiper>
       </div>
     </div>

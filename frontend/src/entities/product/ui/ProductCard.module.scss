@@ -1,0 +1,78 @@
+@use '../../../app/styles/vars';
+@use '../../../app/styles/px';
+@use '../../../app/styles/mixins';
+
+
+.colorSquare {
+  display: block;
+  width: px.$px15;
+  height: px.$px15;
+  border: px.$px1 solid black;
+}
+
+.ProductCard {
+
+}
+
+.imgWrapper {
+  position: relative;
+  & > img {
+    height: 100%;
+    width: 100%;
+  }
+}
+
+.plus {
+  position: absolute;
+  top: 0;
+  padding: px.$px12;
+  background-color: rgba(vars.$color-transparent, 0.44);
+
+  & > img {
+    width: px.$px15;
+    height: px.$px15;
+  }
+}
+
+.descriptionCard {
+ & > p {
+   display: flex;
+   gap: px.$px5;
+   align-items: center;
+   font-size: px.$px12 !important;
+   & > div {
+     display: flex;
+     align-items: center;
+     gap: px.$px3;
+   }
+ }
+}
+
+.heroInfoCard {
+  font-size: px.$px14;
+  display: flex;
+  justify-content: space-between;
+  & > span {
+    color: black;
+  }
+}
+
+@include mixins.tablets() {
+
+  .descriptionCard {
+    & > p {
+      font-size: 12px !important;
+    }
+  }
+
+  .heroInfoCard {
+    & > h4, span {
+      font-size: 16px;
+    }
+  }
+
+  .colorSquare {
+    width: 10px;
+    height: 10px;
+  }
+}

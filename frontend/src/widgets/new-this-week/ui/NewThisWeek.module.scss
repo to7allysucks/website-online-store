@@ -1,0 +1,41 @@
+@use '../../../app/styles/vars';
+@use '../../../app/styles/px';
+@use '../../../app/styles/mixins';
+
+.btnsNav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: px.$px10;
+
+
+  & > button {
+    padding: px.$px10;
+    border: px.$px1 solid vars.$color-black;
+
+    & > img {
+      width: px.$px20;
+      height: px.$px20;
+    }
+  }
+}
+
+.btnNext {
+  rotate: 180deg;
+}
+
+.slider {
+  margin-block: px.$px30;
+}
+
+@include mixins.tablets() {
+  .btnsNav {
+    display: none;
+  }
+
+  .sliderWrapper {
+    & > h2 > sup {
+      font-size: 20px;
+    }
+  }
+}

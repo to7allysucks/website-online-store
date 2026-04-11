@@ -1,5 +1,6 @@
-import { NewCollections } from "../../../widgets/new-collection/ui/NewCollections.jsx";
-import {Search} from "../../../widgets/search-products/ui/Search.jsx";
+import { NewCollections } from "../../../widgets/new-collection";
+import {Search} from "../../../widgets/search-products";
+import { NewThisWeek } from "../../../widgets/new-this-week/index.js";
 import styles from './HomePage.module.scss'
 
 const HomePage = () => {
@@ -8,6 +9,7 @@ const HomePage = () => {
     <div className={styles.home}>
       <Search />
       <NewCollections />
+      <NewThisWeek />
     </div>
   );
 };

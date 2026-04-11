@@ -2,7 +2,7 @@
 @use 'fonts';
 @use 'vars';
 @use 'px';
-
+@use 'mixins';
 
 body {
   background-image: url("../../shared/assets/images/background.svg");
@@ -20,9 +20,26 @@ a {
 h2 {
   font-size: px.$px48 !important;
   font-weight: 700 !important;
+  text-transform: uppercase;
+  line-height: 0.8;
 }
 
 p {
   font-size: px.$px16 !important;
   font-weight: 300;
+}
+
+sup {
+  position: relative;
+  top: -(px.$px20);
+  font-size: px.$px20;
+  color: vars.$color-sup;
+}
+
+@include mixins.tablets() {
+
+  h2 {
+    font-size: 48px !important;
+  }
+
 }
