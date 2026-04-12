@@ -36,10 +36,20 @@ sup {
   color: vars.$color-sup;
 }
 
+h3 {
+  font-size: px.$px48;
+  font-weight: 300;
+}
+
 @include mixins.tablets() {
 
   h2 {
     font-size: 48px !important;
   }
 
+  h3 {
+    font-size: 48px;
+  }
+
 }
+

@@ -1,0 +1,49 @@
+@use '../../../app/styles/vars';
+@use '../../../app/styles/mixins';
+@use '../../../app/styles/px';
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  & > p {
+    color: vars.$color-secondary;
+    font-size: px.$px16;
+    text-align: center;
+    width: 60%;
+  }
+}
+
+.cardWrapper {
+  display: flex;
+  justify-content: center;
+  gap: px.$px20;
+  margin-top: px.$px20;
+  width: 100%;
+}
+
+.top{
+  transform: translateY(px.$px60);
+}
+
+
+@include mixins.tablets() {
+
+  .cardWrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .wrapper > p {
+    font-size: 16px !important;
+    width: 80%;
+  }
+
+  .top  {
+    transform: translateY(0);
+  }
+}
+

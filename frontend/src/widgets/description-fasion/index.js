@@ -1,0 +1,1 @@
+export { DescriptionFasion } from './ui/DescriptionFasion.jsx'
