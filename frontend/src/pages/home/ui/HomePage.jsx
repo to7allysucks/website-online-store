@@ -2,6 +2,7 @@ import { NewCollections } from "../../../widgets/new-collection";
 import {Search} from "../../../widgets/search-products";
 import { NewThisWeek } from "../../../widgets/new-this-week/index.js";
 import styles from './HomePage.module.scss'
+import {XivCollections} from "../../../widgets/XIV-collections/index.js";
 
 const HomePage = () => {
 
@@ -10,6 +11,7 @@ const HomePage = () => {
       <Search />
       <NewCollections />
       <NewThisWeek />
+      <XivCollections />
     </div>
   );
 };

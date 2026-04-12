@@ -1,0 +1,71 @@
+@use '../../../app/styles/vars';
+@use '../../../app/styles/px';
+@use '../../../app/styles/mixins';
+
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(px.$px60, 1fr));
+  gap: px.$px40;
+  margin-block: px.$px20;
+  transition: vars.$transition-duration all ease;
+}
+
+
+.dropDownWrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 100px;
+}
+
+.dropDownBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  color: vars.$color-secondary;
+  transition: vars.$transition-duration all ease;
+}
+
+
+.arrowDropDown {
+  transform: rotate(-90deg);
+  width: px.$px10;
+  height: px.$px10;
+  scale: 1.5;
+}
+
+//.dropDownBtn:not(.active):hover {
+//  color: vars.$color-black;
+//    .arrowDropDown {
+//      transform: rotate(-90deg);
+//      animation: pulse infinite 0.7s 0.5s ease;
+//    }
+//}
+
+
+.dropDownBtn .active {
+  transform: rotate(90deg);
+  //&:hover {
+  //
+  //  color: vars.$color-black;
+  //  .arrowDropDown {
+  //    transform: rotate(90deg);
+  //    animation: pulse 0.7s 0.5s ease !important;
+  //  }
+  //}
+}
+
+//@keyframes pulse {
+//  from {
+//    opacity: 1;
+//    transform: translateX(0);
+//  }
+//
+//  to {
+//    opacity: 0;
+//    transform: scale(1.2);
+//  }
+//}
+
+

@@ -1,4 +1,4 @@
-import { create } from "zustand/react";
+import { create } from "zustand";
 
 export const useAuthStore = create((set) => ({
   user: null,
@@ -12,6 +12,6 @@ export const useAuthStore = create((set) => ({
 
   logOut: () => {
     localStorage.removeItem('token')
-    set({ user: null, token: null, isAuth: null })
+    set({ user: null, token: null, isAuth: false })
   },
 }))

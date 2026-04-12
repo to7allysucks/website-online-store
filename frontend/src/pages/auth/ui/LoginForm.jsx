@@ -23,20 +23,17 @@ export const LoginForm = (props) => {
 
     try {
       const {access_token} = await authApi.login({email, password})
-      
       const user = await authApi.getMe()
-
       setAuth(user, access_token)
       navigate(ROUTES.HOME)
     }
-
     catch {
       setError('Error')
     }
   }
 
   return (
-    <form className={styles.form}>
+    <form  onSubmit={handleSubmit} className={styles.form}>
       <h2>Log In</h2>
       <label htmlFor="email">Email</label>
       <input 
@@ -54,7 +51,7 @@ export const LoginForm = (props) => {
       value={password}
       onChange={ (e) => setPassword(e.target.value) } />
       {error && <p className={styles.error}>{error}</p>}
-      <button onClick={handleSubmit} className={styles.btnSubmit}>Log In</button>
+      <button type='submit' className={styles.btnSubmit}>Log In</button>
 
       <p>
         Dont have account? <span onClick={onSwitch}>Register</span>

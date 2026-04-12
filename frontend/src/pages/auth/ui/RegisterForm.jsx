@@ -11,10 +11,10 @@ export const RegisterForm = (props) => {
   } = props
 
   const [formData, setFormData] = useState({
-    'email': '',
-    'password': '',
-    'first_name': '',
-    'last_name': '',
+    email: '',
+    password: '',
+    first_name: '',
+    last_name: '',
   })
 
   const [error, setError] = useState('')
@@ -49,7 +49,7 @@ export const RegisterForm = (props) => {
   }
 
   return (
-    <form className={styles.form}>
+    <form  onSubmit={handleSubmit} className={styles.form}>
           <h2>Register</h2>
     
           <label htmlFor="email">Email</label>
@@ -80,7 +80,7 @@ export const RegisterForm = (props) => {
           placeholder="Last Name"
           onChange={handleChange}/>
           {error && <p className={styles.error}>{error}</p>}
-          <button onClick={handleSubmit} className={styles.btnSubmit}>Register</button>
+          <button type='submit' className={styles.btnSubmit}>Register</button>
     
           <p>
             Have a account?  <span onClick={onSwitch}>Log In</span>

@@ -1,0 +1,20 @@
+@use  '../../../app/styles/vars';
+@use  '../../../app/styles/mixins';
+@use  '../../../app/styles/px';
+
+
+.tabs {
+  display: flex;
+  justify-content: start;
+  gap: px.$px40;
+  margin-top: px.$px40;
+}
+
+.tab {
+  color: vars.$color-secondary;
+
+}
+.active {
+  color: vars.$color-black;
+}
+
