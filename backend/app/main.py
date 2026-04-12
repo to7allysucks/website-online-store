@@ -7,18 +7,24 @@ from api.auth import router as auth_router
 
 app = FastAPI(title='Cloth Online Store API')
 
-app.include_router(product_router)
-app.include_router(auth_router)
+origins = [
+    'http://localhost:5173',
+    'http://127.0.0.1:5173',
+    'http://localhost:3000',
+]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=['http://localhost:5173'],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=['*'],
     allow_headers=['*'],
 )
 
-@app.get('/health', summary='Health', tags=['Root'])
+app.include_router(product_router)
+app.include_router(auth_router)
+
+@app.get('/api/health', summary='Health', tags=['Root'])
 def health():
     return {'success': 'OK'}
 
