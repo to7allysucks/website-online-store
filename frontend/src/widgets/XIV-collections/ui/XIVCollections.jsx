@@ -1,7 +1,7 @@
 import { Tabs } from "../../../shared/ui/tabs/index.js";
 import { COLLECTIONS } from "../../../shared/config/collections.js";
 import styles from './XivCollections.module.scss'
-import {use, useState} from "react";
+import { useState } from "react";
 import {ProductCard} from "../../../entities/product/index.js";
 import arrowImg from '../../../shared/assets/icons/arrow_prev.svg'
 

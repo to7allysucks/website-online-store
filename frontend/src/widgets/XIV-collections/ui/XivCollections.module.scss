@@ -15,7 +15,6 @@
 .dropDownWrapper {
   display: flex;
   justify-content: center;
-  margin-bottom: 100px;
 }
 
 .dropDownBtn {
@@ -68,4 +67,19 @@
 //  }
 //}
 
+@include mixins.tablets() {
 
+  .grid {
+    grid-template-columns: repeat(2, minmax(px.$px20, 1fr));
+  }
+
+
+  .dropDownBtn {
+    font-size: 20px;
+  }
+
+  .arrowDropDown {
+    width: 10px;
+    height: 10px;
+  }
+}

@@ -18,3 +18,8 @@
   color: vars.$color-black;
 }
 
+@include mixins.tablets() {
+  .tab {
+    font-size: 24px;
+  }
+}
