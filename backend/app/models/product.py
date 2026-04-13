@@ -12,6 +12,7 @@ class Product(Base):
     description = Column(String)
     price = Column(Numeric(10, 2), nullable=False)
     category_id = Column(UUID(as_uuid=True), ForeignKey('categories.id'))
+    collection_id = Column(UUID(as_uuid=True), ForeignKey('collections.id'))
 
     variants = relationship('ProductVariant', back_populates='product')
     images = relationship('ProductImage', back_populates='product')
