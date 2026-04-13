@@ -41,6 +41,13 @@ h3 {
   font-weight: 300;
 }
 
+
+h4 {
+  font-size: px.$px16;
+  font-weight: 600;
+}
+
+
 @include mixins.tablets() {
 
   h2 {
