@@ -3,3 +3,35 @@
 @use '../../../app/styles/mixins';
 
 
+.accordeon {
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    padding-block: px.$px15;
+}
+
+
+.content {
+    display: grid    ;
+    grid-template-columns: repeat(4, 1fr);
+    align-items: center;
+    white-space: nowrap;
+    gap: px.$px10;
+    text-align: center;
+    margin-bottom: px.$px10;
+
+    & > button {
+        padding-block: px.$px5;
+        border: px.$px1 solid vars.$color-secondary;
+        font-size: px.$px14;
+    }
+}
+
+.separator {
+    display: block;
+    width: 100%;
+    height: px.$px1;
+    border: px.$px1 dashed black;
+}

@@ -28,12 +28,12 @@ export const NewCollections = () => {
             <button
               className={styles.btnPrev}
               onClick={() => swiperRef.current?.slidePrev()}>
-              <img src={imgArrowPrev} alt=""/>
+              <img src={imgArrowPrev} alt="arrow"/>
             </button>
             <button
               className={styles.btnNext}
               onClick={() => swiperRef.current?.slideNext()}>
-              <img src={imgArrowPrev} alt=""/>
+              <img src={imgArrowPrev} alt="arrow"/>
             </button>
           </div>
         </div>

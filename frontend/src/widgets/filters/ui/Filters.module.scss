@@ -4,4 +4,11 @@
 
 .wrapper {
     margin-top: px.$px60;
+    width: px.$px300;
+}
+
+
+.contentList {
+    display: flex;
+    flex-direction: column;
 }
