@@ -8,6 +8,7 @@ import CheckOutPage from "../../pages/checkout";
 import ProfilePage from "../../pages/profile";
 import HomePage from "../../pages/home";
 import AuthPage from "../../pages/auth";
+import {Footer} from "../../widgets/footer";
 
 
 const Layout = ({children}) => {
@@ -15,6 +16,7 @@ const Layout = ({children}) => {
     <>
       <Header />
       <main>{children}</main>
+      <Footer />
     </>
     )
 }

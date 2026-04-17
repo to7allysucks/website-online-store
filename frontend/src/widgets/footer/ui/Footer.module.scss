@@ -1,0 +1,61 @@
+@use '../../../app/styles/vars';
+@use '../../../app/styles/mixins';
+@use '../../../app/styles/px';
+
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 50vh;
+  background-color: darken(vars.$color-transparent, 5%);
+  opacity: 1;
+  margin-top: px.$px150;
+  width: 100vw;
+  padding: px.$px150;
+}
+
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
+  align-items: center;
+
+}
+
+
+.infoWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.infoList {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: px.$px10;
+  & > li, span {
+    text-transform: uppercase;
+    color: vars.$color-secondary;
+    font-size: px.$px12;
+    cursor: pointer;
+  }
+  & > span {
+    margin-bottom: px.$px20;
+  }
+}
+
+.imgWrapper {
+
+
+  & > span {
+    color: vars.$color-secondary;
+  }
+}
+
+.descriptionImg {
+
+}
+

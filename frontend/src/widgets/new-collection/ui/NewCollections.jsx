@@ -4,8 +4,6 @@ import { ROUTES } from "../../../shared/config/routes.js";
 import { Swiper, SwiperSlide } from "swiper/react";
 import 'swiper/css';
 import styles from './newCollections.module.scss'
-import img1 from '../../../shared/assets/images/1f.png'
-import img2 from '../../../shared/assets/images/2f.png'
 import imgLongArrow from '../../../shared/assets/icons/long_arrow.svg';
 import imgArrowPrev from '../../../shared/assets/icons/arrow_prev.svg';
 
