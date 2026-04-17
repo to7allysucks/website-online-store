@@ -30,11 +30,11 @@ export const Filters = () => {
     return (
         <div className={styles.wrapper}>
             <h4>Filters</h4>
-            <ul className={styles.contentList}>
+            <ul className={styles.contentList} draggable={false} >
                 {MOCKS.map(({id, title, content}) => (
                     <Filter title={title} items={content} key={id}/>
                 ))}
-                
+        
             </ul>
         </div>
     )

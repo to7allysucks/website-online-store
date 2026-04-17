@@ -1,3 +1,5 @@
+
+import arrowIMG from '../../../shared/assets/icons/arrow_prev.svg'
 import styles from "./Filter.module.scss"
 
 export const Filter = (props) => {
@@ -9,10 +11,17 @@ export const Filter = (props) => {
     return (
         <>
         <details className={styles.accordeon}>
-            <summary className={styles.title}>{title}</summary>
+            <summary 
+            className={styles.title}
+            >{title}
+            <img  className={styles.arrow} src={arrowIMG} alt="arrow" />
+            </summary>
             <ul className={styles.content}>
                 {items.map((item) => (
-                    <button className={styles.item} style={{'backgroundColor' : item, 'color' : item, 'border' : item}}>{item}</button>
+                    <button 
+                    className={styles.item} 
+                    style={{'backgroundColor' : item, 'color' : item}}
+                    >{item}</button>
                 ))} 
             </ul>
         </details>

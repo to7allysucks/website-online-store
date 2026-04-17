@@ -6,26 +6,59 @@
 .accordeon {
     display: flex;
     flex-direction: column;
+    transform: max-height 1s ease;
 }
 
+details[open] {
+    .content {
+        transition: all ease-out vars.$transition-duration;
+        max-height: px.$px150;
+    }
+
+    .arrow {
+        transform: rotate(270deg);
+    }
+}
+
+
+
 .title {
+    display: flex;
+    justify-content: space-between;
     padding-block: px.$px15;
+    cursor: pointer;
+}
+
+summary {
+    &:marker {
+        display: none;
+    }
 }
 
 
 .content {
-    display: grid    ;
+    display: grid;
     grid-template-columns: repeat(4, 1fr);
     align-items: center;
     white-space: nowrap;
     gap: px.$px10;
     text-align: center;
     margin-bottom: px.$px10;
+    user-select: none;
+    overflow: hidden;
+    max-height: 0 ;
+    transition: max-height ease-out vars.$transition-duration;
 
     & > button {
         padding-block: px.$px5;
         border: px.$px1 solid vars.$color-secondary;
         font-size: px.$px14;
+        transition: all vars.$transition-duration ease;
+
+        &:hover {
+           color: vars.$color-white;
+           background-color: vars.$color-black; 
+        }
     }
 }
 
@@ -35,3 +68,11 @@
     height: px.$px1;
     border: px.$px1 dashed black;
 }
+
+.arrow {
+    transform: rotate(180deg);
+    width: px.$px10;
+    height: px.$px10;
+    transition: all vars.$transition-duration ease;
+}
+

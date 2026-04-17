@@ -11,4 +11,5 @@
 .contentList {
     display: flex;
     flex-direction: column;
+    transition: all ease-out vars.$transition-duration;
 }
