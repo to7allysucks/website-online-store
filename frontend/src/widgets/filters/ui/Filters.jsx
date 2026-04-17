@@ -1,4 +1,5 @@
-import styles from './Filters'
+import { Filter } from '../../../shared/ui/filter'
+import styles from './Filters.module.scss'
 
 export const Filters = () => {
     return (

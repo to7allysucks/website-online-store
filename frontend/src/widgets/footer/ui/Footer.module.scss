@@ -9,7 +9,6 @@
   justify-content: space-between;
   height: 50vh;
   background-color: darken(vars.$color-transparent, 5%);
-  opacity: 1;
   margin-top: px.$px150;
   width: 100vw;
   padding: px.$px150;
@@ -55,7 +54,24 @@
   }
 }
 
-.descriptionImg {
 
+@include mixins.tablets() {
+  .footer {
+    padding: 50px;
+    height: 30vh;
+  }
+
+  .container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .infoList {
+    margin: 10px;
+    & > li, span {
+      font-size: 12px;
+    }
+  }
 }
 
