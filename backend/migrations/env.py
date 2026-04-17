@@ -23,7 +23,7 @@ from models.product import Product, ProductVariant, ProductImage
 from models.cart import CartItem
 from models.order import Order, OrderItem, ShippingAddress
 from models.favorite import Favorite
-from models.category import Category
+from models.category import Category, Collection
 from core.database import Base
 from core.config import settings
 

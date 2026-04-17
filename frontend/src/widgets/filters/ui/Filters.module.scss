@@ -1,0 +1,7 @@
+@use '../../../app/styles/px';
+@use '../../../app/styles/vars';
+@use '../../../app/styles/mixins';
+
+.wrapper {
+    margin-top: px.$px60;
+}

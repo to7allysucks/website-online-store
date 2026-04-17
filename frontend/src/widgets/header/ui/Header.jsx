@@ -21,8 +21,8 @@ const Header = () => {
             <span></span>
           </button>
           <NavLink className={styles.navItem} to={ROUTES.HOME}>Home</NavLink>
-          <NavLink className={styles.navItem} to={ROUTES.Products}>Products</NavLink>
-          <NavLink className={styles.navItem} to={ROUTES.Products}>New</NavLink>
+          <NavLink className={styles.navItem} to={ROUTES.PRODUCTS}>Products</NavLink>
+          <NavLink className={styles.navItem} to={ROUTES.PRODUCTS}>New</NavLink>
         </div>
 
         <div className={styles.logo}><img src={Logo} alt="logo"/></div>
