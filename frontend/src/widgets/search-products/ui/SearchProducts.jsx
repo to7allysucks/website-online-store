@@ -1,9 +1,10 @@
 import { ROUTES } from "../../../shared/config/routes.js";
 import { NavLink } from "react-router-dom";
 
-import styles from './Search.module.scss'
+import {Search} from "../../../shared/ui/search/index.js";
+import styles from './SearchProducts.module.scss'
 
-export const Search = () => {
+export const SearchProducts = () => {
   return (
     <div className={styles.wrapper}>
       <ul className={styles.listCategory}>
@@ -12,7 +13,7 @@ export const Search = () => {
         <NavLink to={ROUTES.PRODUCTS} className={styles.item}>kids</NavLink>
       </ul>
       <div className={styles.searchWrapper}>
-        <input type="search" placeholder='Search' img/>
+        <Search />
       </div>
     </div>
   );

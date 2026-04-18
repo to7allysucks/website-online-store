@@ -1,0 +1,40 @@
+@use '../../../app/styles/px';
+@use '../../../app/styles/vars';
+@use '../../../app/styles/mixins';
+
+
+
+
+.search {
+  height: px.$px60;
+  width: 100%;
+  background-color: rgb(vars.$color-search-bg, 0.5);
+  opacity: 0.6;
+  border-radius: px.$px5;
+  background-image: url("../../../shared/assets/icons/search.svg");
+  background-repeat: no-repeat;
+  background-size: px.$px20;
+  background-position: px.$px10 center;
+  text-align: right;
+
+  &::placeholder {
+    font-size: px.$px16;
+    font-weight: 300;
+    text-align: end;
+    width: 80%;
+    color: rgba(vars.$color-black, 0.66);
+  }
+
+  &:placeholder-shown {
+    color: vars.$color-black;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  & > img {
+    width: px.$px20;
+    height: px.$px20;
+  }
+}
