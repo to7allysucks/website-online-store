@@ -1,1 +1,1 @@
-export { Search } from './ui/Search.jsx'
+export { SearchProducts } from './ui/SearchProducts.jsx'
