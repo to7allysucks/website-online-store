@@ -6,13 +6,14 @@
 .accordeon {
     display: flex;
     flex-direction: column;
-    transform: max-height 1s ease;
+    transition: max-height ease-out vars.$transition-duration;
+    animation: fadeIn vars.$transition-duration forwards;
 }
 
-details[open] {
+.accordeon[open] {
+
     .content {
-        transition: all ease-out vars.$transition-duration;
-        max-height: px.$px150;
+        animation: fadeIn vars.$transition-duration linear;
     }
 
     .arrow {
@@ -20,17 +21,27 @@ details[open] {
     }
 }
 
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        margin-top: -(px.$px10);
+    }
 
+    100% {
+        opacity: 1;
+        margin-top: 0;
+    }
+
+}
 
 .title {
     display: flex;
     justify-content: space-between;
     padding-block: px.$px15;
     cursor: pointer;
-}
+    align-items: center;
 
-summary {
-    &:marker {
+    &::marker {
         display: none;
     }
 }
@@ -45,15 +56,13 @@ summary {
     text-align: center;
     margin-bottom: px.$px10;
     user-select: none;
-    overflow: hidden;
-    max-height: 0 ;
-    transition: max-height ease-out vars.$transition-duration;
+
 
     & > button {
         padding-block: px.$px5;
         border: px.$px1 solid vars.$color-secondary;
         font-size: px.$px14;
-        transition: all vars.$transition-duration ease;
+        transition: all vars.$transition-duration ease-out;
 
         &:hover {
            color: vars.$color-white;
