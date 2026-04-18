@@ -7,7 +7,8 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 50vh;
+  align-items: center;
+  height: 40vh;
   background-color: darken(vars.$color-transparent, 5%);
   margin-top: px.$px150;
   width: 100vw;
@@ -17,9 +18,9 @@
 .container {
   display: flex;
   justify-content: space-between;
-  width: 70%;
   align-items: center;
-
+  height: 100%;
+  width: 60%;
 }
 
 
@@ -27,6 +28,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  width: 100%;
 }
 
 .infoList {
