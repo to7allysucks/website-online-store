@@ -1,6 +1,7 @@
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import RedirectResponse
 
 from api.product import router as product_router
 from api.auth import router as auth_router
@@ -23,6 +24,10 @@ app.add_middleware(
 
 app.include_router(product_router)
 app.include_router(auth_router)
+
+@app.get("/", include_in_schema=False)
+async def redirect_to_docs():
+    return RedirectResponse(url="/docs", status_code=301)
 
 @app.get('/api/health', summary='Health', tags=['Root'])
 def health():
