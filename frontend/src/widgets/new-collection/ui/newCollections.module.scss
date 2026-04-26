@@ -44,7 +44,7 @@
 .btnShop {
   display: flex;
   justify-content: space-between;
-  background-color: darken(vars.$color-white, 30%);
+  background-color: rgba(vars.$color-secondary, 0.7);
   opacity: 0.7;
   align-items: center;
   padding: 10px 20px;

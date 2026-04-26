@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ROUTES } from "../../shared/config/routes.js";
 import Header from '../../widgets/header';
-import ProductsPage from "../../pages/Products";
+import {ProductsPage} from "../../pages/products/ui/ProductsPage.jsx";
 import ProductPage from "../../pages/product";
 import CartPage from "../../pages/cart";
 import CheckOutPage from "../../pages/checkout";
