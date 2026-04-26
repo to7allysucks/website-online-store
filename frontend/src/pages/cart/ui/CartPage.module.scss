@@ -1,0 +1,48 @@
+@use '../../../app/styles/vars';
+@use '../../../app/styles/mixins';
+@use '../../../app/styles/px';
+
+.wrapper {
+    display: flex;
+    min-width: 100vw;
+    height: 90vh;
+    align-items: center;
+}
+
+.variants {
+    display: flex;
+    gap: px.$px20;
+    justify-content: start;
+    color: vars.$color-secondary;
+    > div {
+        text-transform: uppercase;
+        font-size: px.$px16;
+        font-weight: 500;
+        cursor: pointer;
+    }
+}
+
+.active {
+    color: vars.$color-black;
+    font-size: px.$px18;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    display: flex;
+    justify-content: space-between;
+}
+
+.productsList {
+    width: 60vw;
+}
+
+.totalCard {
+    width: 30vw;
+    padding: px.$px50 px.$px40;
+    border: px.$px1 solid vars.$color-secondary;
+}
