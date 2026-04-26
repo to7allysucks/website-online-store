@@ -3,13 +3,33 @@
 @use '../../../app/styles/mixins';
 
 .wrapper {
+  width: px.$px300;
 
-    width: px.$px300;
+  > h4 {
+    display: flex;
+    gap: px.$px20;
+  }
 }
 
+.arrow {
+  display: none;
+}
 
 .contentList {
-    display: flex;
-    flex-direction: column;
-    transition: all ease-out vars.$transition-duration;
+  display: flex;
+  flex-direction: column;
+  transition: all ease-out vars.$transition-duration;
+}
+
+@include mixins.tablets() {
+  .arrow {
+    display: block;
+  }
+
+  .wrapper {
+    transform: translateY(-120vw);
+    width: 150px;
+    display: none;
+  }
+
 }

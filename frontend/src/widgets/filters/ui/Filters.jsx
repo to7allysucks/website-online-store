@@ -1,6 +1,6 @@
 import { Filter } from '../../../shared/ui/filter'
 import styles from './Filters.module.scss'
-
+import arrowIMG from '../../../shared/assets/icons/arrow_prev.svg'
 
 
 export const Filters = () => {
@@ -29,7 +29,7 @@ export const Filters = () => {
     
     return (
         <div className={styles.wrapper}>
-            <h4>Filters</h4>
+            <h4>Filters <img className={styles.arrow} src={arrowIMG} alt="arrow"/></h4>
             <ul className={styles.contentList} draggable={false} >
                 {MOCKS.map(({id, title, content}) => (
                     <Filter title={title} items={content} key={id}/>

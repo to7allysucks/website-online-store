@@ -131,7 +131,6 @@ export const ProductsPage = () => {
           )))
             :  <div className={styles.hintSearch}>Products not yet</div>
           }
-
         </div>
       </div>
     </div>

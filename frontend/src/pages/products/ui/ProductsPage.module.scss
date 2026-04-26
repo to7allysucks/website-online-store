@@ -5,8 +5,8 @@
 .productsWrapper {
   margin-top: px.$px60;
   display: flex;
-  gap: px.$px10;
-  min-width: 80vh;
+  gap: px.$px20;
+  min-height: 80vh;
 }
 
 .content {
@@ -43,4 +43,24 @@
   font-weight: 300;
   color: vars.$color-secondary;
   grid-column: 1 / -1;
+}
+
+@include mixins.tablets() {
+  .productsWrapper {
+    margin-top: 50px;
+  }
+
+  .productsList {
+    grid-template-columns: repeat(2 , minmax(100px, 1fr));
+    gap: 10px;
+  }
+
+  .searchWrapper {
+    align-self: center;
+    width: 100%;
+    > h3 {
+      text-align: center;
+      font-size: 24px;
+    }
+  }
 }
