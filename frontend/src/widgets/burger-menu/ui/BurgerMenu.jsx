@@ -18,8 +18,8 @@ export const BurgerMenu = (props) => {
         </button>
         <nav className={styles.nav}>
           <NavLink to={ROUTES.HOME} onClick={onClose}>Home</NavLink>
-          <NavLink to={ROUTES.Products} onClick={onClose}>Products</NavLink>
-          <NavLink to={ROUTES.Products} onClick={onClose}>New</NavLink>
+          <NavLink to={ROUTES.PRODUCTS} onClick={onClose}>Products</NavLink>
+          <NavLink to={ROUTES.PRODUCTS} onClick={onClose}>New</NavLink>
         </nav>
       </div>
     </>

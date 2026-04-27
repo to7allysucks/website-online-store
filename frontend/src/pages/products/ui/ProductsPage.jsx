@@ -1,8 +1,8 @@
 import {Filters} from "../../../widgets/filters/ui/Filters.jsx";
-import styles from './ProductsPage.module.scss';
 import {Search} from "../../../shared/ui/search/index.js";
 import {ProductCard} from "../../../entities/product/index.js";
 import {useState} from "react";
+import styles from './ProductsPage.module.scss';
 
 
 export const ProductsPage = () => {

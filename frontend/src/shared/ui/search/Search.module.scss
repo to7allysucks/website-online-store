@@ -16,12 +16,12 @@
   background-size: px.$px20;
   background-position: px.$px10 center;
   text-align: right;
+  background-size: px.$px20;
 
   &::placeholder {
     font-size: px.$px16;
     font-weight: 300;
     text-align: end;
-    width: 80%;
     color: rgba(vars.$color-black, 0.66);
   }
 
@@ -33,8 +33,15 @@
     outline: none;
   }
 
-  & > img {
-    width: px.$px20;
-    height: px.$px20;
+}
+
+@include mixins.tablets() {
+  .search {
+    height: 50px;
+    background-size: 20px;
+    &::placeholder {
+      align-self: center;
+      font-size: 16px;    
+    }
   }
 }
