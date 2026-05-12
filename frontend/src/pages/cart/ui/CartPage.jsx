@@ -1,8 +1,23 @@
 
+import { useState } from "react";
 import styles from "./CartPage.module.scss";
 
 
 const CartPage = () => {
+
+  const [totalPrice, setTotalPrice] = useState('')
+  const [isCheck, setIscheck] = useState(false)
+
+  const setCheckedtoggle = ()=> {
+    if (isCheck === false) {
+      setIscheck(true)
+    } else if (isCheck === true) {
+      setIscheck(false)
+    }
+  };
+  
+
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
@@ -17,24 +32,34 @@ const CartPage = () => {
           <div className={styles.totalCard}>
             <h4>order summary</h4>
             <div className={styles.contentCard}>
-              <div>
+              <div className={styles.contentInner}>
                 <span>Subtotal</span>
-                <span>180$</span>
+                <span >180$</span>
               </div>
-              <div>
-                <span>Subtotal</span>
-                <span>180$</span>
+              <div className={styles.contentInner}>
+                <span>Shipping</span>
+                <span>10$</span>
               </div>
               <div className={styles.separator}></div>
-              <h4>total 
+              <h4 className={styles.totalEnter}>
+                <div>
+                total 
                 <p>(TAX INCL.)</p>
-                <h4>$190</h4>
+                </div>
+                <h4>190$</h4>
               </h4>
               <div className={styles.agreement}>
                 <input name="agreement" type="checkbox"></input>
-                <label htmlFor="agreement">I agree to the Terms and Conditions</label>
+                <label 
+                htmlFor="agreement"
+                onClick={setCheckedtoggle}
+                >I agree to the Terms and Conditions</label>
               </div>
-              <button className={styles.btnContinue}>continue</button>
+              <button 
+              className={styles.btnContinue} 
+              disabled={isCheck}
+              >continue
+              </button>
             </div>
           </div>
         </div>

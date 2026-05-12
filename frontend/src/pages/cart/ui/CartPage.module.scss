@@ -45,4 +45,63 @@
     width: 30vw;
     padding: px.$px50 px.$px40;
     border: px.$px1 solid vars.$color-secondary;
+
+    h4 {
+        font-size: px.$px24;
+        font-weight: 300;
+        text-transform: uppercase;
+    }
+}
+
+.contentCard {
+    display: flex;
+    flex-direction: column;
+    gap: px.$px20;
+}
+
+.totalEnter {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+
+    > div {
+        display: flex;
+    }
+}
+
+.contentInner {
+    display: flex;
+    justify-content: space-between;
+    
+    > span {
+        color: vars.$color-black;
+    }
+}
+
+.agreement {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    > label {
+        color: vars.$color-secondary;
+        font-weight: 200;
+        margin-top: 0;
+    }
+
+    > input {
+        height: px.$px20;
+        width: px.$px20;
+    }
+}
+
+.btnContinue {
+    text-transform: uppercase;
+    padding: px.$px18;
+    background-color: vars.$color-transparent;
+    
+    &:hover {
+        background-color: transparent;
+        box-shadow: inset 0 0 0 px.$px1 vars.$color-black;
+        transition: 0.1s linear all;
+    }
 }
