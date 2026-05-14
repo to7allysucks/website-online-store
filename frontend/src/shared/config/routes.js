@@ -6,4 +6,5 @@ export const ROUTES = {
   CHECKOUT: '/checkout',
   PROFILE: '/profile',
   AUTH: '/auth',
+  FAVORITES: './favorites',
 }

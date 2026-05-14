@@ -14,12 +14,6 @@
     gap: px.$px20;
     justify-content: start;
     color: vars.$color-secondary;
-    > div {
-        text-transform: uppercase;
-        font-size: px.$px16;
-        font-weight: 500;
-        cursor: pointer;
-    }
 }
 
 .active {
@@ -35,17 +29,24 @@
 .content {
     display: flex;
     justify-content: space-between;
+    gap: px.$px50;
 }
 
 .productsList {
     width: 60vw;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: px.$px20;
+    padding: px.$px20 0;
+    border-bottom: px.$px1 solid vars.$color-secondary;
+    border-top: px.$px1 solid vars.$color-secondary;
 }
 
 .totalCard {
     width: 30vw;
     padding: px.$px50 px.$px40;
     border: px.$px1 solid vars.$color-secondary;
-
+    height: fit-content;
     h4 {
         font-size: px.$px24;
         font-weight: 300;
@@ -99,9 +100,16 @@
     padding: px.$px18;
     background-color: vars.$color-transparent;
     
-    &:hover {
+    &:not(:disabled):hover {
         background-color: transparent;
         box-shadow: inset 0 0 0 px.$px1 vars.$color-black;
         transition: 0.1s linear all;
     }
+}
+
+.navLink {
+    text-transform: uppercase;
+    font-size: px.$px16;
+    font-weight: 500;
+    cursor: pointer;
 }

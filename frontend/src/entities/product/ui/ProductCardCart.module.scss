@@ -1,0 +1,90 @@
+@use '../../../app/styles/vars';
+@use '../../../app/styles/px';
+@use '../../../app/styles/mixins';
+
+.ProductCardWrapper {
+    display: flex;
+    gap: px.$px10;
+}
+
+.ProductCard {
+    position: relative;
+}
+
+.imgWrapper {
+
+}
+
+
+.plus {
+  position: absolute;
+  top: 0;
+  padding: px.$px12;
+  background-color: rgba(vars.$color-transparent, 0.44);
+
+  & > img {
+    width: px.$px15;
+    height: px.$px15;
+  }
+}
+
+.descriptionCard {
+ & > p {
+   display: flex;
+   gap: px.$px5;
+   align-items: center;
+   font-size: px.$px12 !important;
+   & > div {
+     display: flex;
+     align-items: center;
+     gap: px.$px3;
+   }
+ }
+}
+
+.heroInfoCard {
+  font-size: px.$px14;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  & > h4 {
+    font-size: px.$px12;
+  }
+  & > span {
+    color: black;
+  }
+}
+
+.actionsWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    gap: px.$px30;
+    align-items: center;
+}
+
+.closeBtn {
+    padding: px.$px5;
+
+    & > img {
+        transform: rotate(45deg);
+        width: 1.1vw;
+        height: auto;
+    }
+}
+
+.counterWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: px.$px5;
+}
+
+.counterCloth {
+
+}
+
+.actions {
+    text-align: center;
+    padding: px.$px5;
+    border: px.$px1 solid vars.$color-black;
+}

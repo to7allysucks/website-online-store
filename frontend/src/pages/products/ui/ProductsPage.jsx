@@ -127,6 +127,7 @@ export const ProductsPage = () => {
             <ProductCard
               product={product}
               key={product.id + index}
+              variant="catalog"
             />
           )))
             :  <div className={styles.hintSearch}>Products not yet</div>
