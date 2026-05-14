@@ -1,20 +1,70 @@
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from core.database import get_db
+from models.product import Product, ProductVariant
+from schemas.product import ProductFilterParams, ProductListResponse
+from sqlalchemy import select, func
+from sqlalchemy.orm import selectinload
 
 router = APIRouter(prefix='/api/products', tags=['Products'])
 
-@router.get('/')
+@router.get('/', response_model=ProductListResponse)
 async def get_products(
-    db: AsyncSession = Depends(get_db),
-    category: str = Query(None),
-    size: str = Query(None),
-    color: str = Query(None),
-    min_price: float = Query(None),
-    max_price: float = Query(None),
-    search: str = Query(None),
+    filters: ProductFilterParams = Depends(),
+    db: AsyncSession = Depends(get_db)
 ):
-    return []
+    query = select(Product).options(selectinload(Product.images), selectinload(Product.variants), selectinload(Product.category), selectinload(Product.collection))
+
+    if filters.min_price is not None:
+        query = query.where(Product.price >= filters.min_price)
+    if filters.max_price is not None:
+        query = query.where(Product.price <= filters.max_price)
+    if filters.search is not None:
+        query = query.where(Product.name.ilike(f'%{filters.search}%'))
+    if filters.category is not None:
+        query = query.where(Product.category_id == filters.category)
+    if filters.color is not None or filters.size is not None:
+        query = query.join(Product.variants)
+        if filters.color is not None:
+            query = query.where(ProductVariant.color == filters.color)
+        if filters.size is not None:
+            query = query.where(ProductVariant.size == filters.size)
+
+    count_query = select(func.count()).select_from(query.subquery())
+    total_result = await db.execute(count_query)
+    total = total_result.scalar()
+
+    query = query.limit(filters.limit).offset(filters.offset)
+
+    result = await db.execute(query)
+    products = result.scalars().all()
+
+    items = []
+    for product in products:
+        main_img_url = 'https://placehold.co/300x400'
+        for img in product.images:
+            if img.is_main:
+                main_img_url = img.url
+                break
+
+        available_colors = list(set([v.color for v in product.variants if v.color]))
+        available_sizes = list(set([v.size for v in product.variants if v.size]))
+
+        items.append({
+            'id': product.id,
+            'name': product.name,
+            'description': product.description,
+            'price': product.price,
+            'category_id': product.category_id,
+            'category_name': product.category.name if product.category else None,
+            'collection_id': product.collection_id,
+            'collection_name': product.collection.name if product.collection else None,
+            'main_image': main_img_url,
+            'colors': available_colors,
+            'sizes': available_sizes
+
+        })
+    return {'total': total, 'items': items}
 
 @router.get('/{id}')
 async def get_product(id: int):
