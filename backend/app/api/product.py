@@ -1,10 +1,11 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from core.database import get_db
 from models.product import Product, ProductVariant
-from schemas.product import ProductFilterParams, ProductListResponse
+from schemas.product import ProductFilterParams, ProductListResponse, ProductDetailResponse
 from sqlalchemy import select, func
 from sqlalchemy.orm import selectinload
+from uuid import UUID
 
 router = APIRouter(prefix='/api/products', tags=['Products'])
 
@@ -47,25 +48,31 @@ async def get_products(
                 main_img_url = img.url
                 break
 
-        available_colors = list(set([v.color for v in product.variants if v.color]))
-        available_sizes = list(set([v.size for v in product.variants if v.size]))
+        available_colors = list(set([var.color for var in product.variants if var.color]))
+        available_sizes = list(set([var.size for var in product.variants if var.size]))
 
         items.append({
             'id': product.id,
             'name': product.name,
             'description': product.description,
             'price': product.price,
-            'category_id': product.category_id,
-            'category_name': product.category.name if product.category else None,
-            'collection_id': product.collection_id,
-            'collection_name': product.collection.name if product.collection else None,
+            'category': product.category,
+            'collection': product.collection,
             'main_image': main_img_url,
             'colors': available_colors,
             'sizes': available_sizes
-
         })
+
     return {'total': total, 'items': items}
 
-@router.get('/{id}')
-async def get_product(id: int):
-    return {'id': id, 'name': 'sample item'}
+@router.get('/{id}', response_model=ProductDetailResponse)
+async def get_product(id: UUID, db: AsyncSession = Depends(get_db)):
+    query = select(Product).options(selectinload(Product.images), selectinload(Product.variants), selectinload(Product.category), selectinload(Product.collection))
+    query = query.where(Product.id == id)
+    result = await db.execute(query)
+
+    product = result.scalars().one_or_none()
+    if not product:
+        raise HTTPException(status_code=404, detail='Иди нахуй')
+
+    return product

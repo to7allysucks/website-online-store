@@ -1,18 +1,46 @@
 from pydantic import BaseModel, Field
 from uuid import UUID
 
-class ProductResponse(BaseModel):
+class ProductImageResponse(BaseModel):
+    id: UUID
+    url: str
+    is_main: bool
+
+    class Config:
+        from_attributes = True
+
+class ProductVariantResponse(BaseModel):
+    id: UUID
+    color: str | None
+    size: str | None
+    stock: int
+
+    class Config:
+        from_attributes = True
+
+class CategoryShortResponse(BaseModel):
+    id: UUID
+    name: str
+
+    class Config:
+        from_attributes = True
+
+class CollectionShortResponse(BaseModel):
+    id: UUID
+    name: str
+
+    class Config:
+        from_attributes = True
+
+class ProductDetailResponse(BaseModel):
     id: UUID
     name: str
     description: str | None
     price: float
-    category_id: UUID | None
-    category_name: str | None
-    collection_id: UUID | None
-    collection_nam: str | None
-    main_image: str | None
-    colors: list[str]
-    sizes: list[str]
+    category: CategoryShortResponse | None = None
+    collection: CollectionShortResponse | None = None
+    images: list[ProductImageResponse]
+    variants: list[ProductVariantResponse]
 
     class Config:
         from_attributes = True
@@ -26,7 +54,20 @@ class ProductFilterParams(BaseModel):
     min_price: float | None = Field(default=None, ge=0)
     max_price: float | None = Field(default=None, ge=0)
     search: str | None = None
-    order_by: str | None = 'name'
+
+class ProductResponse(BaseModel):
+    id: UUID
+    name: str
+    description: str | None
+    price: float
+    category: CategoryShortResponse | None = None
+    collection: CollectionShortResponse | None = None
+    main_image: str | None
+    colors: list[str]
+    sizes: list[str]
+
+    class Config:
+        from_attributes = True
 
 class ProductListResponse(BaseModel):
     total: int

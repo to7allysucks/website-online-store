@@ -1,3 +1,4 @@
+from models.category import Category, Collection
 from sqlalchemy import Column, String, Numeric, Boolean, Integer, ForeignKey
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
@@ -13,6 +14,8 @@ class Product(Base):
     price = Column(Numeric(10, 2), nullable=False)
     category_id = Column(UUID(as_uuid=True), ForeignKey('categories.id'))
     collection_id = Column(UUID(as_uuid=True), ForeignKey('collections.id'))
+    category = relationship('Category', foreign_keys=[category_id])
+    collection = relationship('Collection', foreign_keys=[collection_id])
 
     variants = relationship('ProductVariant', back_populates='product')
     images = relationship('ProductImage', back_populates='product')
