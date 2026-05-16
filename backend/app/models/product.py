@@ -28,7 +28,7 @@ class ProductVariant(Base):
     size = Column(String)
     stock = Column(Integer, default=0)
 
-    product = relationship('Product', back_populates='variants')
+    product = relationship('Product', back_populates='variants', foreign_keys=[product_id])
 
 class ProductImage(Base):
     __tablename__ = 'product_images'
@@ -39,4 +39,4 @@ class ProductImage(Base):
     url = Column(String, nullable=False)
     is_main = Column(Boolean, default=False)
 
-    product = relationship('Product', back_populates='images')
+    product = relationship('Product', back_populates='images', foreign_keys=[product_id])

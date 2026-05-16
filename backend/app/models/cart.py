@@ -1,5 +1,7 @@
 from sqlalchemy import Column, Integer, ForeignKey, DateTime
 from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.orm import relationship
+from models.product import ProductVariant
 from core.database import Base
 import uuid
 from datetime import datetime
@@ -12,3 +14,5 @@ class CartItem(Base):
     variant_id = Column(UUID(as_uuid=True), ForeignKey('product_variants.id'))
     quantity = Column(Integer, default=1)
     added_at = Column(DateTime, default=datetime.utcnow)
+
+    variant = relationship('ProductVariant', foreign_keys=[variant_id])

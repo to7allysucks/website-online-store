@@ -73,6 +73,6 @@ async def get_product(id: UUID, db: AsyncSession = Depends(get_db)):
 
     product = result.scalars().one_or_none()
     if not product:
-        raise HTTPException(status_code=404, detail='Иди нахуй')
+        raise HTTPException(status_code=404, detail='Not Found')
 
     return product
