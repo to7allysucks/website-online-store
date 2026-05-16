@@ -16,7 +16,6 @@ class Product(Base):
     collection_id = Column(UUID(as_uuid=True), ForeignKey('collections.id'))
     category = relationship('Category', foreign_keys=[category_id])
     collection = relationship('Collection', foreign_keys=[collection_id])
-
     variants = relationship('ProductVariant', back_populates='product')
     images = relationship('ProductImage', back_populates='product')
 

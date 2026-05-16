@@ -319,7 +319,7 @@ async def seed():
         db.add_all(products)
         await db.flush()
 
-        colors = ['000000', 'ffffff']
+        colors = ['#000000', '#ffffff']
         sizes = ['XS', 'S', 'M', 'L', 'XL', '2X']
 
         variants = []
