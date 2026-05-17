@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 from uuid import UUID
 
 class ProductImageResponse(BaseModel):
@@ -54,6 +54,13 @@ class ProductFilterParams(BaseModel):
     min_price: float | None = Field(default=None, ge=0)
     max_price: float | None = Field(default=None, ge=0)
     search: str | None = None
+
+    @model_validator(mode='after')
+    def validate_prices(self):
+        if self.min_price is not None and self.max_price is not None:
+            if self.min_price > self.max_price:
+                raise ValueError('Максимальная цена меньше минимальной')
+        return self
 
 class ProductResponse(BaseModel):
     id: UUID
