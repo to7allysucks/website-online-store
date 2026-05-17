@@ -5,6 +5,7 @@ from fastapi.responses import RedirectResponse
 
 from api.cart import router as cart_router
 from api.product import router as product_router
+from api.order import router as order_router
 from api.auth import router as auth_router
 
 app = FastAPI(title='Cloth Online Store API')
@@ -25,6 +26,7 @@ app.add_middleware(
 
 app.include_router(cart_router)
 app.include_router(product_router)
+app.include_router(order_router)
 app.include_router(auth_router)
 
 @app.get("/", include_in_schema=False)
