@@ -5,6 +5,7 @@ from fastapi import HTTPException
 from uuid import UUID
 
 from models.product import Product, ProductVariant
+from models.category import Category
 from schemas.product import ProductFilterParams
 
 class ProductService:
@@ -28,13 +29,15 @@ class ProductService:
         if filters.search is not None:
             query = query.where(Product.name.ilike(f'%{filters.search}%'))
         if filters.category is not None:
-            query = query.where(Product.category_id == filters.category)
+            query = query.join(Product.category).where(Category.slug == filters.category)
         if filters.color is not None or filters.size is not None:
             query = query.join(Product.variants)
             if filters.color is not None:
                 query = query.where(ProductVariant.color == filters.color)
             if filters.size is not None:
                 query = query.where(ProductVariant.size == filters.size)
+
+        query = query.distinct()
 
         count_query = select(func.count()).select_from(query.subquery())
         total_result = await db.execute(count_query)
