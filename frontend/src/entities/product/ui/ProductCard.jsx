@@ -10,7 +10,7 @@ import { useState } from 'react'
 import mockImg from '../../../shared/assets/images/mock.png'
 
 export const ProductCard = ({product, variant = 'catalog'}) => {
-  const mainImage = product.images.find(img => img.is_main)?.url
+  const mainImage = product['main_image']
   const styles = variant === 'cart' ? stylesCart : stylesCatalog
   const actionIcon = variant === 'catalog'? plusImg : likeImg
 
@@ -20,16 +20,16 @@ export const ProductCard = ({product, variant = 'catalog'}) => {
     <div className={styles.ProductCardWrapper}>
       <div className={styles.ProductCard}>
         <div className={styles.imgWrapper}>
-          <img src={mockImg} alt="img"/>{/*-----------MockImg-----------*/}
+          <img src={mainImage} alt="img"/>{/*-----------MockImg-----------*/}
           <button className={styles.plus}>
             <img src={actionIcon} alt="img"/>
           </button>
         </div>
 
         <div className={styles.descriptionCard}>
-          <p>{product.material} {product.category}   {product.colors?.length ? <div><span className={styles.colorSquare} style={{backgroundColor: `${product.colors[0]}`}}></span>+{product.colors.length - 1}</div> : ''}</p>
+          <p>{product.description} {product.colors?.length ? <div><span className={styles.colorSquare} style={{backgroundColor: `${product.colors[0]}`}}></span>+{product.colors.length - 1}</div> : ''}</p>
           <div className={styles.heroInfoCard}>
-            <h4>{product.title}</h4>
+            <h4>{product.name}</h4>
             <span>$ {product.price}</span>
           </div>
         </div>

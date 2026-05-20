@@ -1,117 +1,82 @@
 import { Tabs } from "../../../shared/ui/tabs/index.js";
 import { COLLECTIONS } from "../../../shared/config/collections.js";
 import styles from './XivCollections.module.scss'
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import {ProductCard} from "../../../entities/product/index.js";
 import arrowImg from '../../../shared/assets/icons/arrow_prev.svg'
+import {api} from "../../../shared/api/instanse.js";
 
 
 export const XivCollections = () => {
+    const [products, setProducts] = useState([])
+    const [isLoading, setIsLoading] = useState(true)
+    const [productsByCollections, setProductsByCollections] = useState({
+        all: [],
+        men: [],
+        women: [],
+        kid: [],
+    });
 
-  const MOCK_PRODUCTS = [
-    {
-      id:'1',
-      title: 'Embroidered Seersucker Shirt',
-      material: 'V-Neck',
-      price: 99,
-      category: 'T-Shirt',
-      colors: ['white','red','blue'],
-      images: [{url: 'https://placehold.co/300x300', is_main: true}]
-    },
-    {
-      id:'2',
-      title: 'Embroidered Seersucker Shirt',
-      material: 'V-Neck',
-      price: 99,
-      category: 'T-Shirt',
-      colors: ['black','red','blue'],
-      images: [{url: 'https://placehold.co/300x300', is_main: true}]
-    },
-    {
-      id:'3',
-      title: 'Embroidered Seersucker Shirt',
-      material: 'V-Neck',
-      price: 99,
-      category: 'T-Shirt',
-      colors: null,
-      images: [{url: 'https://placehold.co/300x300', is_main: true}]
-    },
-    {
-      id:'4',
-      title: 'Embroidered Seersucker Shirt',
-      material: 'V-Neck',
-      price: 99,
-      category: 'T-Shirt',
-      colors: ['red','white','blue'],
-      images: [{url: 'https://placehold.co/300x300', is_main: true}]
-    },
-    {
-      id:'5',
-      title: 'Embroidered Seersucker Shirt',
-      material: 'V-Neck',
-      price: 99,
-      category: 'T-Shirt',
-      colors: ['white','red','blue'],
-      images: [{url: 'https://placehold.co/300x300', is_main: true}]
-    },
-    {
-      id:'6',
-      title: 'Embroidered Seersucker Shirt',
-      material: 'V-Neck',
-      price: 99,
-      category: 'T-Shirt',
-      colors: ['white','red','blue'],
-      images: [{url: 'https://placehold.co/300x300', is_main: true}]
-    },
-    {
-      id:'7',
-      title: 'Embroidered Seersucker Shirt',
-      material: 'V-Neck',
-      price: 99,
-      category: 'T-Shirt',
-      colors: ['white','red','blue'],
-      images: [{url: 'https://placehold.co/300x300', is_main: true}]
-    },
-    {
-      id:'8',
-      title: 'Embroidered Seersucker Shirt',
-      material: 'V-Neck',
-      price: 99,
-      category: 'T-Shirt',
-      colors: ['white','red','blue'],
-      images: [{url: 'https://placehold.co/300x300', is_main: true}]
-    },
-  ]
+    useEffect(() => {
+        api.get('/products',
+            {
+                params: {
+                    limit: 20
+                }
+            }
+        )
+            .then(res => setProducts(res.data.items))
+            .catch(err => console.log('Ошибка вывода продуктов:', err))
+            .finally(() => setIsLoading(false))
+    }, []);
 
-  const PRODUCTS_BY_COLLECTIONS ={
-    all: [...MOCK_PRODUCTS],
-    men: [...MOCK_PRODUCTS],
-    women: [...MOCK_PRODUCTS],
-    kid: [...MOCK_PRODUCTS],
-  }
+    console.log(products)
+    useEffect(() => {
+        if (!products || products.length === 0) return;
+
+
+        const PRODUCTS_BY_COLLECTIONS ={
+            all: [...products].slice(0, 16),
+            men: [],
+            women: [],
+            kid: [],
+        }
+        products.forEach((product, index) => {
+            if ( index < 16 ) {
+                PRODUCTS_BY_COLLECTIONS.men.push(product)
+            } else if ( index < 32 ) {
+                PRODUCTS_BY_COLLECTIONS.women.push(product)
+            } else if ( index < 48 ) {
+                PRODUCTS_BY_COLLECTIONS.kid.push(product)
+            }
+        })
+
+        setProductsByCollections(PRODUCTS_BY_COLLECTIONS)
+    }, [products])
+
+
 
   const [activeTab, setActiveTab] = useState('all')
   const [isOpen, setIsOpen] = useState(false)
-
   const toggleDropDown = () => setIsOpen(!isOpen)
+    const activeProducts = productsByCollections[activeTab] || []
+    const visibleProducts = isOpen ? activeProducts : activeProducts.slice(0, 4)
 
-  const products = PRODUCTS_BY_COLLECTIONS[activeTab]
-
-  const visibleProducts = isOpen ? products : products.slice(0, 4)
+    console.log(productsByCollections)
 
   return (
     <div className={styles.wrapper}>
       <h2>xiv<br/>collections<br/>23-24</h2>
-
       <Tabs
         tabs={COLLECTIONS}
         activeTab={activeTab}
         onTabChange={setActiveTab}
       />
       <div className={styles.grid}>
-        {visibleProducts.map(product => (
-          <ProductCard key={product.id} product={product}/>
-        ))}
+          {(isLoading ?
+              <div>Loading...</div> :
+                  visibleProducts.map(product =>  <ProductCard key={product.id} product={product}/>)
+          )}
       </div>
       <div className={styles.dropDownWrapper}>
           <button

@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import {useEffect, useRef, useState} from "react";
 import {NavLink} from "react-router-dom";
 import { ROUTES } from "../../../shared/config/routes.js";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -6,11 +6,27 @@ import 'swiper/css';
 import styles from './newCollections.module.scss'
 import imgLongArrow from '../../../shared/assets/icons/long_arrow.svg';
 import imgArrowPrev from '../../../shared/assets/icons/arrow_prev.svg';
+import {api} from "../../../shared/api/instanse.js";
 
 
 export const NewCollections = () => {
 
   const swiperRef = useRef(null)
+  const [products, setProducts] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    api.get('/products',
+        {
+          params: {
+            limit: 5
+          }
+        }
+    )
+        .then(res => setProducts(res.data.items))
+        .catch(err => console.log('Ошибка вывода продуктов:', err))
+        .finally(() => setIsLoading(false))
+  }, []);
 
   return (
     <div className={styles.sliderWrapper}>
@@ -47,12 +63,15 @@ export const NewCollections = () => {
             768: {slidesPerView: 3, spaceBetween: 20}
           }}
         >
-          <SwiperSlide className={styles.imgSlide}><img src='https://placehold.co/300x300' alt="img"/></SwiperSlide>
-          <SwiperSlide className={styles.imgSlide}><img src='https://placehold.co/300x300' alt="img"/></SwiperSlide>
-          <SwiperSlide className={styles.imgSlide}><img src='https://placehold.co/300x300' alt="img"/></SwiperSlide>
-          <SwiperSlide className={styles.imgSlide}><img src='https://placehold.co/300x300' alt="img"/></SwiperSlide>
-          <SwiperSlide className={styles.imgSlide}><img src='https://placehold.co/300x300' alt="img"/></SwiperSlide>
-          <SwiperSlide className={styles.imgSlide}><img src='https://placehold.co/300x300' alt="img"/></SwiperSlide>
+          {products.map(product => (
+              <SwiperSlide className={styles.imgSlide}>
+                {(isLoading) ?
+                    <div>Loading... </div> :
+                    <img src={product['main_image']} alt="img"/>
+                }
+              </SwiperSlide>
+          )
+        )}
         </Swiper>
       </div>
     </div>

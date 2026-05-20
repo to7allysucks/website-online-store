@@ -3,64 +3,35 @@ import {NavLink} from "react-router-dom";
 import { ROUTES } from "../../../shared/config/routes.js";
 import { Swiper, SwiperSlide } from "swiper/react";
 import 'swiper/css';
-import {useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import imgArrowPrev from "../../../shared/assets/icons/arrow_prev.svg";
 import ProductPage from "../../../pages/product/index.js";
 import {ProductCard} from "../../../entities/product/index.js";
+import {api} from "../../../shared/api/instanse.js";
 
 export const NewThisWeek = () => {
 
   const swiperRef = useRef(null)
 
-  const MOCK_PRODUCTS = [
-    {
-      id:'1',
-      title: 'Embroidered Seersucker Shirt',
-      material: 'V-Neck',
-      price: 99,
-      category: 'T-Shirt',
-      colors: ['white','red','blue'],
-      images: [{url: 'https://placehold.co/300x300', is_main: true}]
-    },
-    {
-      id:'1',
-      title: 'Embroidered Seersucker Shirt',
-      material: 'V-Neck',
-      price: 99,
-      category: 'T-Shirt',
-      colors: ['black','red','blue'],
-      images: [{url: 'https://placehold.co/300x300', is_main: true}]
-    },
-    {
-      id:'1',
-      title: 'Embroidered Seersucker Shirt',
-      material: 'V-Neck',
-      price: 99,
-      category: 'T-Shirt',
-      colors: null,
-      images: [{url: 'https://placehold.co/300x300', is_main: true}]
-    },
-    {
-      id:'1',
-      title: 'Embroidered Seersucker Shirt',
-      material: 'V-Neck',
-      price: 99,
-      category: 'T-Shirt',
-      colors: ['red','white','blue'],
-      images: [{url: 'https://placehold.co/300x300', is_main: true}]
-    },
-    {
-      id:'1',
-      title: 'Embroidered Seersucker Shirt',
-      material: 'V-Neck',
-      price: 99,
-      category: 'T-Shirt',
-      colors: ['white','red','blue'],
-      images: [{url: 'https://placehold.co/300x300', is_main: true}]
-    },
-  ]
+  const [products, setProducts] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
 
-  const [products, setProducts] = useState(MOCK_PRODUCTS)
+  useEffect(() => {
+    api.get('/products',
+        {
+          params: {
+            limit: 10
+          }
+        }
+        )
+        .then(res => setProducts(res.data.items))
+        .catch(err => console.log('Ошибка вывода продуктов:', err))
+        .finally(() => setIsLoading(false))
+  }, []);
+
+  if (isLoading) return <div>Loading...</div>
+
+  console.log(products)
 
   return (
     <div className={styles.sliderWrapper}>
