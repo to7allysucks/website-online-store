@@ -5,6 +5,8 @@
 .ProductCardWrapper {
     display: flex;
     gap: px.$px10;
+    max-width: 100%;
+    height: auto;
 }
 
 .ProductCard {
@@ -77,6 +79,7 @@
     display: flex;
     flex-direction: column;
     gap: px.$px5;
+    width: px.$px32;
 }
 
 .counterCloth {
@@ -87,4 +90,78 @@
     text-align: center;
     padding: px.$px5;
     border: px.$px1 solid vars.$color-black;
+    transition: all ease vars.$transition-duration;
+  &:not(.counter):hover {
+    background-color: rgba(vars.$color-secondary, 0.2);
+  }
+  & > img {
+    margin: auto;
+  }
+
+}
+
+.plusCloth {
+  cursor: pointer;
+
+}
+
+
+@include mixins.tablets() {
+
+  .actionPanelWrapper {
+    width: auto;
+  }
+
+  .descriptionCard {
+     > p {
+      font-size: 12px !important;
+    }
+  }
+
+  .heroInfoCard {
+    > h4 {
+      font-size: 12px;
+    }
+
+    font-size: 12px;
+  }
+
+  .closeBtn {
+    width: 20px;
+    height: 20px;
+
+     > img {
+       width: 100%;
+       height: auto;
+     }
+  }
+
+  .size {
+    margin-top: 20px;
+    font-size: 20px;
+  }
+  .counterWrapper {
+    width: 80%;
+  }
+
+  .plusCloth {
+    width: 20px;
+    height: 20px;
+  }
+
+  .actionsWrapper {
+    gap: 7px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .actions {
+    padding: 5px;
+    font-size: 14px;
+  }
+
+  .actionPanelWrapper {
+    width: 50px;
+    text-align: center;
+  }
 }

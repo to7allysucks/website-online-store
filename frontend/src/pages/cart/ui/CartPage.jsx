@@ -1,4 +1,3 @@
-
 import { useEffect, useMemo, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { ROUTES } from "../../../shared/config/routes";
@@ -65,7 +64,7 @@ const CartPage = () => {
   const [isCheck, setIscheck] = useState(true)
   const [products, setProducts] = useState(MOCK_PRODUCTS)
 
-  const setCheckedtoggle = ()=> {
+  const setCheckedToggle = ()=> {
     if (isCheck === false) {
       setIscheck(true)
       
@@ -74,15 +73,16 @@ const CartPage = () => {
     }
   };
 
-    const calcTotalPrice = useMemo(() => {
-     let price = products.reduce((currentPrice, product) => product.price + currentPrice,0)
-     console.log(price);
-     return price
-    }, [products])
 
-    useEffect(() => {
-      setTotalPrice(calcTotalPrice)
-    }, [calcTotalPrice])
+
+  const calcTotalPrice = useMemo(() => {
+   let price = products.reduce((currentPrice, product) => product.price + currentPrice,0)
+   return price
+  }, [products])
+
+  useEffect(() => {
+    setTotalPrice(calcTotalPrice)
+  }, [calcTotalPrice])
 
 
   return (
@@ -119,7 +119,7 @@ const CartPage = () => {
                 <input 
                 name="agreement" 
                 type="checkbox"
-                onClick={setCheckedtoggle}
+                onClick={setCheckedToggle}
                 ></input>
                 <label 
                 htmlFor="agreement"

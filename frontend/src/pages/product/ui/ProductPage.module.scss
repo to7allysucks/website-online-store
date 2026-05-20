@@ -1,0 +1,139 @@
+@use '../../../app/styles/vars';
+@use '../../../app/styles/mixins';
+@use '../../../app/styles/px';
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  gap: px.$px50;
+  margin-top: 150px;
+  height: 50vh;
+}
+
+
+.cardProductWrapper {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  gap: px.$px20;
+  border: px.$px1 solid vars.$color-secondary;
+  padding: px.$px40 px.$px50;
+}
+
+.cardDescription {
+  display: flex;
+  flex-direction: column;
+  gap: px.$px5;
+  & > h4 {
+    font-size: px.$px14 !important;
+    color: vars.$color-black;
+  }
+
+  & > span {
+    font-size: px.$px14 !important;
+    color: vars.$color-black !important;
+  }
+
+  & > p {
+    font-size: px.$px12;
+    color: vars.$color-secondary;
+  }
+
+  & > div {
+    font-size: px.$px14;
+    color: vars.$color-black;
+  }
+}
+
+.cardParamsWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: px.$px5;
+  height: fit-content;
+}
+
+.cardParams {
+  display: flex;
+  flex-direction: column;
+  gap: px.$px3;
+
+  & > span {
+    color: vars.$color-secondary;
+    font-size: px.$px14;
+    font-weight: 300;
+  }
+}
+
+.paramsList {
+  display: flex;
+  gap: px.$px5;
+}
+
+.squareParams {
+  width: px.$px35;
+  height: px.$px35;
+  border: px.$px1 solid vars.$color-black;
+  text-align: center;
+  padding: px.$px5;
+}
+
+.btnLike {
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  > img {
+    padding: px.$px10;
+    background-color: white;
+    stroke: black;
+  }
+}
+
+
+.btnAdd {
+  background-color: rgba(vars.$color-secondary, 0.2);
+  padding: px.$px10;
+}
+
+//Slider
+
+.mainSlider {
+  width: auto;
+  height: 100%;
+}
+
+.mainSlide {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  > img {
+    //height: 100%;
+    //width: auto;
+  }
+}
+
+.sliderWrapper {
+  width: 20%;
+  display: flex;
+  justify-content: space-between;
+  gap: px.$px20;
+}
+
+
+.thumbsSlider {
+  height: auto;
+}
+
+.thumbSlide {
+
+  width: px.$px300;
+  height: px.$px400;
+
+  > img {
+
+  object-fit: cover;
+  max-height: 100%;
+  width: auto;
+  }
+}

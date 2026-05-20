@@ -1,16 +1,18 @@
-
-import imgPlus from '../../../shared/assets/icons/plus.svg'
+import plusImg from '../../../shared/assets/icons/plus.svg'
+import minusImg from '../../../shared/assets/icons/minus.svg'
 import stylesCatalog from './ProductCard.module.scss'
 import stylesCart from './ProductCardCart.module.scss'
 import likeImg from '../../../shared/assets/icons/like.svg'
 import closeImg from '../../../shared/assets/icons/plus.svg'
 import { useState } from 'react'
 
+//Mock
+import mockImg from '../../../shared/assets/images/mock.png'
 
 export const ProductCard = ({product, variant = 'catalog'}) => {
   const mainImage = product.images.find(img => img.is_main)?.url
   const styles = variant === 'cart' ? stylesCart : stylesCatalog
-  const actionIcon = variant === 'catalog'? imgPlus : likeImg
+  const actionIcon = variant === 'catalog'? plusImg : likeImg
 
   const [counterCloth, setCounterCloth] = useState(1)
 
@@ -18,7 +20,7 @@ export const ProductCard = ({product, variant = 'catalog'}) => {
     <div className={styles.ProductCardWrapper}>
       <div className={styles.ProductCard}>
         <div className={styles.imgWrapper}>
-          <img src={mainImage} alt="img"/>
+          <img src={mockImg} alt="img"/>{/*-----------MockImg-----------*/}
           <button className={styles.plus}>
             <img src={actionIcon} alt="img"/>
           </button>
@@ -41,12 +43,14 @@ export const ProductCard = ({product, variant = 'catalog'}) => {
           <div className={styles.actionsWrapper}>
             <div className={styles.size}>{product.size}</div>
             <div className={styles.counterWrapper}>
-              <div className={styles.actions}>
+              <div className={styles.actions} onClick={() => setCounterCloth(counterCloth + 1)}>
                 <img src={closeImg} alt="plus" className={styles.plusCloth}/>
               </div>
-              <div className={styles.actions}>{counterCloth}</div>
-              <div className={`${styles.actions} ${styles.counterCloth}`}>
-                <img src={closeImg} alt="plus" className={styles.plusCloth}/>
+
+              <div className={`${styles.actions} ${styles.counter}`}>{counterCloth}</div>
+
+              <div className={styles.actions} onClick={() => setCounterCloth(counterCloth - 1)}>
+                <img src={minusImg} alt="minus" className={styles.plusCloth}/>
               </div>
             </div>
           </div>

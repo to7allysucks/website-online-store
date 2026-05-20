@@ -4,7 +4,7 @@
 
 .wrapper {
     display: flex;
-    min-width: 100vw;
+    min-width: 90vw;
     height: 90vh;
     align-items: center;
 }
@@ -87,6 +87,7 @@
         color: vars.$color-secondary;
         font-weight: 200;
         margin-top: 0;
+        font-size: px.$px18;
     }
 
     > input {
@@ -112,4 +113,90 @@
     font-size: px.$px16;
     font-weight: 500;
     cursor: pointer;
+}
+
+@include mixins.tablets() {
+
+    .wrapper {
+        justify-content: start;
+        height: auto;
+    }
+
+    .container {
+        margin-top: 100px;
+    }
+
+    .content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .variants {
+        justify-content: space-between;
+    }
+
+    .navLink {
+        font-size: 13px;
+    }
+
+    .productsList {
+        grid-template-columns: repeat(1, 300px);
+        margin-top: 20px;
+        gap: 10px;
+        border: 0;
+    }
+
+    .totalCard {
+        width: 100%;
+        height: auto;
+
+        & > h4 {
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+    }
+
+    .contentInner {
+        font-size: 14px;
+    }
+
+    .totalEnter {
+
+        & > div, p {
+            font-size: 14px ;
+
+        }
+
+        & > p {
+            font-size: 10px !important;
+        }
+
+        & > h4 {
+            font-size: 14px;
+        }
+    }
+
+    .contentCard {
+        gap: 10px;
+    }
+
+    .agreement {
+        flex-direction: column;
+        align-items: start;
+
+        & > input  {
+            height: 20px;
+            width: 20px;
+        }
+        & > label {
+            font-size: 14px;
+        }
+    }
+
+    .btnContinue {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+
 }
