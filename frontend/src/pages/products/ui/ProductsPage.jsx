@@ -1,112 +1,82 @@
 import {Filters} from "../../../widgets/filters/ui/Filters.jsx";
 import {Search} from "../../../shared/ui/search/index.js";
 import {ProductCard} from "../../../entities/product/index.js";
-import {useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import styles from './ProductsPage.module.scss';
+import {api} from "../../../shared/api/instanse.js";
 
 
 export const ProductsPage = () => {
 
-  const MOCK_PRODUCTS = [
-    {
-      id: '1',
-      title: 'abc Seersucker Shirt',
-      material: 'V-Neck',
-      price: 99,
-      category: 'T-Shirt',
-      colors: ['white', 'red', 'blue'],
-      images: [{url: 'https://placehold.co/300x300', is_main: true}]
-    },
-    {
-      id: '1',
-      title: 'Embroidered Seersucker Shirt',
-      material: 'V-Neck',
-      price: 99,
-      category: 'T-Shirt',
-      colors: ['black', 'red', 'blue'],
-      images: [{url: 'https://placehold.co/300x300', is_main: true}]
-    },
-    {
-      id: '1',
-      title: 'Embroidered Seersucker Shirt',
-      material: 'V-Neck',
-      price: 99,
-      category: 'T-Shirt',
-      colors: null,
-      images: [{url: 'https://placehold.co/300x300', is_main: true}]
-    },
-    {
-      id: '1',
-      title: 'Embroidered Seersucker Shirt',
-      material: 'V-Neck',
-      price: 99,
-      category: 'T-Shirt',
-      colors: ['red', 'white', 'blue'],
-      images: [{url: 'https://placehold.co/300x300', is_main: true}]
-    },
-    {
-      id: '1',
-      title: 'Embroidered Seersucker Shirt',
-      material: 'V-Neck',
-      price: 99,
-      category: 'T-Shirt',
-      colors: ['white', 'red', 'blue'],
-      images: [{url: 'https://placehold.co/300x300', is_main: true}]
-    },
-    {
-      id: '1',
-      title: 'Embroidered Seersucker Shirt',
-      material: 'V-Neck',
-      price: 99,
-      category: 'T-Shirt',
-      colors: null,
-      images: [{url: 'https://placehold.co/300x300', is_main: true}]
-    },
-    {
-      id: '1',
-      title: 'Embroidered Seersucker Shirt',
-      material: 'V-Neck',
-      price: 99,
-      category: 'T-Shirt',
-      colors: null,
-      images: [{url: 'https://placehold.co/300x300', is_main: true}]
-    },
-    {
-      id: '1',
-      title: 'Embroidered Seersucker Shirt',
-      material: 'V-Neck',
-      price: 99,
-      category: 'T-Shirt',
-      colors: null,
-      images: [{url: 'https://placehold.co/300x300', is_main: true}]
-    },
-    {
-      id: '1',
-      title: 'Embroidered Seersucker Shirt',
-      material: 'V-Neck',
-      price: 99,
-      category: 'T-Shirt',
-      colors: null,
-      images: [{url: 'https://placehold.co/300x300', is_main: true}]
-    },
-    {
-      id: '1',
-      title: 'Embroidered Seersucker Shirt',
-      material: 'V-Neck',
-      price: 99,
-      category: 'T-Shirt',
-      colors: null,
-      images: [{url: 'https://placehold.co/300x300', is_main: true}]
-    },
-  ]
 
   const [querySearch, setQuerySearch] = useState('')
+  const [products, setProducts] = useState([])
+  const [skip, setSkip] = useState(0)
+  const [hasMore, setHasMore] = useState(true)
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+      if (!hasMore) return;
+
+    api.get('/products',
+        {
+          params: {
+              limit: 12,
+              skip: skip
+          }
+        }
+    )
+        .then(res => {
+            const newProducts = res.data.items
+
+            setProducts(prev => [...prev, ...newProducts])
+
+            if (newProducts.length < 12 ){
+                setIsLoading(false)
+            }
+        })
+        .catch(err => console.log('Ошибка вывода продуктов:', err))
+        .finally(() => setIsLoading(false))
+  }, [skip]);
+
+    const observerRef = useRef(null)
+
+    useEffect(() => {
+
+        const observer = new IntersectionObserver(
+            entries => {
+
+                if (
+                    entries[0].isIntersecting &&
+                    !isLoading &&
+                    hasMore
+                ) {
+                    setSkip(prev => prev + 12)
+                }
+
+            },
+            {
+                threshold: 1,
+            }
+        )
+
+        if (observerRef.current) {
+            observer.observe(observerRef.current)
+        }
+
+        return () => {
+            if (observerRef.current) {
+                observer.unobserve(observerRef.current)
+            }
+        }
+
+    }, [isLoading, hasMore])
 
 
   const filteredProducts = querySearch.length === 0
-    ? MOCK_PRODUCTS
-    : MOCK_PRODUCTS.filter(product =>
-      product.title.toLowerCase().includes(querySearch.trim().toLowerCase())
+    ? products
+    : products.filter(product =>
+      product.name.toLowerCase().includes(querySearch.trim().toLowerCase())
     )
 
 
@@ -133,6 +103,8 @@ export const ProductsPage = () => {
             :  <div className={styles.hintSearch}>Products not yet</div>
           }
         </div>
+          <div ref={observerRef}></div>
+          {isLoading && <p>Loading...</p>}
       </div>
     </div>
   );
