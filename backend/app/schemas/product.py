@@ -1,5 +1,11 @@
 from pydantic import BaseModel, Field, model_validator
+from enum import Enum
 from uuid import UUID
+
+class GenderEnum(str, Enum):
+    MAN = 'man'
+    WOMAN = 'woman'
+    KID = 'kid'
 
 class ProductImageResponse(BaseModel):
     id: UUID
@@ -54,6 +60,7 @@ class ProductFilterParams(BaseModel):
     min_price: float | None = Field(default=None, ge=0)
     max_price: float | None = Field(default=None, ge=0)
     search: str | None = None
+    gender: GenderEnum | None = None
 
     @model_validator(mode='after')
     def validate_prices(self):
@@ -72,6 +79,7 @@ class ProductResponse(BaseModel):
     main_image: str | None
     colors: list[str]
     sizes: list[str]
+    gender: GenderEnum
 
     class Config:
         from_attributes = True

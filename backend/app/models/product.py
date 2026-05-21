@@ -1,9 +1,11 @@
 from models.category import Category, Collection
-from sqlalchemy import Column, String, Numeric, Boolean, Integer, ForeignKey
+from sqlalchemy import Column, String, Numeric, Boolean, Integer, ForeignKey, Enum
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 from core.database import Base
+from schemas.product import GenderEnum
 import uuid
+import enum
 
 class Product(Base):
     __tablename__ = 'products'
@@ -14,6 +16,7 @@ class Product(Base):
     price = Column(Numeric(10, 2), nullable=False)
     category_id = Column(UUID(as_uuid=True), ForeignKey('categories.id'))
     collection_id = Column(UUID(as_uuid=True), ForeignKey('collections.id'))
+    gender = Column(Enum(GenderEnum), nullable=True)
     category = relationship('Category', foreign_keys=[category_id])
     collection = relationship('Collection', foreign_keys=[collection_id])
     variants = relationship('ProductVariant', back_populates='product')

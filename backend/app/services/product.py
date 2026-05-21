@@ -30,6 +30,8 @@ class ProductService:
             query = query.where(Product.name.ilike(f'%{filters.search}%'))
         if filters.category is not None:
             query = query.join(Product.category).where(Category.slug == filters.category)
+        if filters.gender is not None:
+            query = query.where(Product.gender == filters.gender)
         if filters.color is not None or filters.size is not None:
             query = query.join(Product.variants)
             if filters.color is not None:
@@ -38,8 +40,9 @@ class ProductService:
                 query = query.where(ProductVariant.size == filters.size)
 
         query = query.distinct()
+        subq = query.subquery()
 
-        count_query = select(func.count(Product.id.distinct()))
+        count_query = select(func.count()).select_from(subq)
         total_result = await db.execute(count_query)
         total = total_result.scalar()
 
