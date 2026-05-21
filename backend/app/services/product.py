@@ -39,7 +39,7 @@ class ProductService:
 
         query = query.distinct()
 
-        count_query = select(func.count()).select_from(query.subquery())
+        count_query = select(func.count(Product.id.distinct()))
         total_result = await db.execute(count_query)
         total = total_result.scalar()
 
