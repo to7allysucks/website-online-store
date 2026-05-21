@@ -79,7 +79,7 @@ class ProductResponse(BaseModel):
     main_image: str | None
     colors: list[str]
     sizes: list[str]
-    gender: GenderEnum
+    gender: GenderEnum | None = None
 
     class Config:
         from_attributes = True
