@@ -5,8 +5,12 @@ export const Filter = (props) => {
     const {
         title,
         items,
+        selectedValues,
+        onSelect
     } = props
-    
+
+    const isColorFilter = title === 'Colors'
+
     return (
         <>
         <details className={styles.accordeon}>
@@ -16,12 +20,31 @@ export const Filter = (props) => {
             <img  className={styles.arrow} src={arrowIMG} alt="arrow" />
             </summary>
             <div className={styles.content}>
-                {items.map((item) => (
-                    <button 
-                    className={styles.item} 
-                    style={{'backgroundColor' : item, 'color' : item}}
-                    >{item}</button>
-                ))} 
+                {items.map((item) => {
+                    const isActive =
+                        selectedValues === item
+
+                        return (
+                            <button
+                                key={item.id}
+                                type="button"
+                                onClick={() =>
+                                    onSelect(item.toLowerCase())
+                                }
+
+                                className={`${styles.item} ${isActive ? 'active' : ''}`}
+                                style={
+                                    isColorFilter
+                                        ? {
+                                            backgroundColor: item,
+                                        }
+                                        : {}
+                                }
+                            >
+                                {!isColorFilter && item}
+                            </button>
+                        )
+                })}
             </div>
         </details>
         <span className={styles.separator}></span>

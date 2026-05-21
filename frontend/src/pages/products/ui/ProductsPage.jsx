@@ -7,37 +7,19 @@ import {api} from "../../../shared/api/instanse.js";
 
 
 export const ProductsPage = () => {
-
-
   const [querySearch, setQuerySearch] = useState('')
   const [products, setProducts] = useState([])
   const [skip, setSkip] = useState(0)
   const [hasMore, setHasMore] = useState(true)
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
+  const [debouncedSearch, setDebouncedSearch] = useState('')
+  const [filters, setFilters] = useState({
+      color: '',
+      size: '',
+      category: '',
+      collection: ''
+  })
 
-  useEffect(() => {
-      if (!hasMore) return;
-
-    api.get('/products',
-        {
-          params: {
-              limit: 12,
-              skip: skip
-          }
-        }
-    )
-        .then(res => {
-            const newProducts = res.data.items
-
-            setProducts(prev => [...prev, ...newProducts])
-
-            if (newProducts.length < 12 ){
-                setIsLoading(false)
-            }
-        })
-        .catch(err => console.log('Ошибка вывода продуктов:', err))
-        .finally(() => setIsLoading(false))
-  }, [skip]);
 
     const observerRef = useRef(null)
 
@@ -45,7 +27,6 @@ export const ProductsPage = () => {
 
         const observer = new IntersectionObserver(
             entries => {
-
                 if (
                     entries[0].isIntersecting &&
                     !isLoading &&
@@ -53,10 +34,9 @@ export const ProductsPage = () => {
                 ) {
                     setSkip(prev => prev + 12)
                 }
-
             },
             {
-                threshold: 1,
+                rootMargin: '200px',
             }
         )
 
@@ -72,17 +52,84 @@ export const ProductsPage = () => {
 
     }, [isLoading, hasMore])
 
+    useEffect(() => {
 
-  const filteredProducts = querySearch.length === 0
-    ? products
-    : products.filter(product =>
-      product.name.toLowerCase().includes(querySearch.trim().toLowerCase())
-    )
+        const timeout = setTimeout(() => {
+            setDebouncedSearch(querySearch)
+        }, 500)
 
+        return () => clearTimeout(timeout)
 
+    }, [querySearch])
+
+    useEffect(() => {
+
+        const fetchProducts = async () => {
+
+            setIsLoading(true)
+
+            try {
+
+                const res = await api.get('/products', {
+                    params: {
+                        limit: 12,
+                        skip,
+
+                        search: debouncedSearch,
+
+                        size: filters.size,
+                        category: filters.category,
+                        color: filters.color,
+                    }
+                })
+
+                const newProducts = res.data.items
+
+                setProducts(prev => (
+                    skip === 0
+                        ? newProducts
+                        : [...prev, ...newProducts]
+                ))
+
+                setHasMore(newProducts.length >= 12)
+
+            } catch (err) {
+
+                console.log('Ошибка вывода продуктов:', err)
+
+            } finally {
+
+                setIsLoading(false)
+
+            }
+        }
+
+        fetchProducts()
+
+    }, [
+        skip,
+        debouncedSearch,
+
+        filters.size,
+        filters.category,
+        filters.color,
+        filters.collection,
+    ])
+    useEffect(() => {
+        setProducts([])
+        setSkip(0)
+        setHasMore(true)
+    }, [debouncedSearch, filters])
+
+    useEffect(() => {
+        console.log(filters)
+    }, [filters])
   return (
     <div className={styles.productsWrapper}>
-      <Filters/>
+      <Filters
+          filters={filters}
+          setFilters={setFilters}
+      />
       <div className={styles.content}>
         <div className={styles.searchWrapper}>
           <h3>Products</h3>
@@ -92,11 +139,11 @@ export const ProductsPage = () => {
           />
         </div>
         <div className={styles.productsList}>
-          {filteredProducts.length !== 0
-          ? (filteredProducts.map((product, index) => (
+          {products.length !== 0
+          ? (products.map((product) => (
             <ProductCard
               product={product}
-              key={product.id + index}
+              key={product.id}
               variant="catalog"
             />
           )))

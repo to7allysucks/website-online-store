@@ -21,6 +21,10 @@
     }
 }
 
+.item {
+    height: px.$px30;
+}
+
 @keyframes fadeIn {
     0% {
         opacity: 0;
@@ -85,3 +89,7 @@
     transition: all vars.$transition-duration ease;
 }
 
+.active {
+    border: px.$px1 solid vars.$color-black;
+    background-color: rgba(vars.$color-white, 0.5);
+}
