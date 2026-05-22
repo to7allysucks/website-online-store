@@ -80,6 +80,7 @@ class ProductResponse(BaseModel):
     colors: list[str]
     sizes: list[str]
     gender: GenderEnum | None = None
+    default_variant_id: UUID | None = None
 
     class Config:
         from_attributes = True

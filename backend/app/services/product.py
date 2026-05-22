@@ -72,7 +72,8 @@ class ProductService:
                 'collection': product.collection,
                 'main_image': main_img_url,
                 'colors': available_colors,
-                'sizes': available_sizes
+                'sizes': available_sizes,
+                'default_variant_id': product.variants[0].id if product.variants else None
             })
 
         return total, items
