@@ -1,4 +1,4 @@
-from sqlalchemy import select, func
+from sqlalchemy import select, func, cast, String
 from sqlalchemy.orm import selectinload
 from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi import HTTPException
@@ -68,6 +68,7 @@ class ProductService:
                 'description': product.description,
                 'price': product.price,
                 'category': product.category,
+                'gender': product.gender,
                 'collection': product.collection,
                 'main_image': main_img_url,
                 'colors': available_colors,

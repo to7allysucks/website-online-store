@@ -5,7 +5,6 @@ from sqlalchemy.orm import relationship
 from core.database import Base
 from schemas.product import GenderEnum
 import uuid
-import enum
 
 class Product(Base):
     __tablename__ = 'products'

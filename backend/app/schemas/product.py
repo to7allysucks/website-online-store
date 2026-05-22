@@ -1,11 +1,11 @@
-from pydantic import BaseModel, Field, model_validator
+from pydantic import BaseModel, Field, model_validator, field_validator
 from enum import Enum
 from uuid import UUID
 
 class GenderEnum(str, Enum):
-    MAN = 'man'
-    WOMAN = 'woman'
-    KID = 'kid'
+    MAN = 'MAN'
+    WOMAN = 'WOMAN'
+    KID = 'KID'
 
 class ProductImageResponse(BaseModel):
     id: UUID
