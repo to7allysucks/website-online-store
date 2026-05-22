@@ -90,6 +90,10 @@
 }
 
 .active {
-    border: px.$px1 solid vars.$color-black;
-    background-color: rgba(vars.$color-white, 0.5);
+    background-color: vars.$color-black;
+    color: vars.$color-white;
+}
+
+.activeColor {
+    opacity: 0.5;
 }

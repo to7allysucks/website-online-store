@@ -1,158 +1,125 @@
-import {Filters} from "../../../widgets/filters/ui/Filters.jsx";
-import {Search} from "../../../shared/ui/search/index.js";
-import {ProductCard} from "../../../entities/product/index.js";
-import {useEffect, useRef, useState} from "react";
-import styles from './ProductsPage.module.scss';
-import {api} from "../../../shared/api/instanse.js";
+import { Filters } from '../../../widgets/filters/ui/Filters.jsx'
+import { Search } from '../../../shared/ui/search/index.js'
+import { ProductCard } from '../../../entities/product/index.js'
+import { useEffect, useRef, useState, useCallback } from 'react'
+import styles from './ProductsPage.module.scss'
+import { api } from '../../../shared/api/instanse.js'
 
+const LIMIT = 12
 
 export const ProductsPage = () => {
   const [querySearch, setQuerySearch] = useState('')
-  const [products, setProducts] = useState([])
-  const [skip, setSkip] = useState(0)
-  const [hasMore, setHasMore] = useState(true)
-  const [isLoading, setIsLoading] = useState(false)
   const [debouncedSearch, setDebouncedSearch] = useState('')
+  const [products, setProducts] = useState([])
+  const [offset, setOffset] = useState(0)
+  const [total, setTotal] = useState(0)
+  const [isLoading, setIsLoading] = useState(false)
   const [filters, setFilters] = useState({
-      color: '',
-      size: '',
-      category: '',
-      collection: ''
+    color: '',
+    size: '',
+    category: '',
+    collection: ''
   })
 
+  const observerRef = useRef(null)
+  const isFirstRender = useRef(true)
 
-    const observerRef = useRef(null)
+  // debounce поиска
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setDebouncedSearch(querySearch)
+    }, 500)
+    return () => clearTimeout(timeout)
+  }, [querySearch])
 
-    useEffect(() => {
+  // сброс при изменении фильтров или поиска
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false
+      return
+    }
+    setProducts([])
+    setOffset(0)
+    setTotal(0)
+  }, [debouncedSearch, filters.size, filters.category, filters.color, filters.collection])
 
-        const observer = new IntersectionObserver(
-            entries => {
-                if (
-                    entries[0].isIntersecting &&
-                    !isLoading &&
-                    hasMore
-                ) {
-                    setSkip(prev => prev + 12)
-                }
-            },
-            {
-                rootMargin: '200px',
-            }
+  // загрузка продуктов
+  useEffect(() => {
+    const fetchProducts = async () => {
+      setIsLoading(true)
+      try {
+        const params = { limit: LIMIT, offset }
+
+        if (debouncedSearch.trim()) params.search = debouncedSearch
+        if (filters.size) params.size = filters.size
+        if (filters.category) params.category = filters.category
+        if (filters.color) params.color = filters.color
+        if (filters.collection) params.collection = filters.collection
+
+        const res = await api.get('/products', { params })
+
+        const newProducts = res.data.items
+        const newTotal = res.data.total
+
+        setTotal(newTotal)
+        setProducts(prev =>
+          offset === 0 ? newProducts : [...prev, ...newProducts]
         )
+      } catch (err) {
+        console.error('Ошибка загрузки продуктов:', err)
+      } finally {
+        setIsLoading(false)
+      }
+    }
 
-        if (observerRef.current) {
-            observer.observe(observerRef.current)
+    fetchProducts()
+  }, [offset, debouncedSearch, filters.size, filters.category, filters.color, filters.collection])
+
+  // IntersectionObserver для бесконечной ленты
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      entries => {
+        if (
+          entries[0].isIntersecting &&
+          !isLoading &&
+          products.length < total  // есть ещё товары
+        ) {
+          setOffset(prev => prev + LIMIT)
         }
+      },
+      { rootMargin: '200px' }
+    )
 
-        return () => {
-            if (observerRef.current) {
-                observer.unobserve(observerRef.current)
-            }
-        }
+    if (observerRef.current) observer.observe(observerRef.current)
 
-    }, [isLoading, hasMore])
+    return () => {
+      if (observerRef.current) observer.unobserve(observerRef.current)
+    }
+  }, [isLoading, products.length, total])
 
-    useEffect(() => {
-
-        const timeout = setTimeout(() => {
-            setDebouncedSearch(querySearch)
-        }, 500)
-
-        return () => clearTimeout(timeout)
-
-    }, [querySearch])
-
-    useEffect(() => {
-
-        const fetchProducts = async () => {
-
-            setIsLoading(true)
-
-            try {
-
-                const res = await api.get('/products', {
-                    params: {
-                        limit: 12,
-                        skip,
-
-                        search: debouncedSearch,
-
-                        size: filters.size,
-                        category: filters.category,
-                        color: filters.color,
-                    }
-                })
-
-                const newProducts = res.data.items
-
-                setProducts(prev => (
-                    skip === 0
-                        ? newProducts
-                        : [...prev, ...newProducts]
-                ))
-
-                setHasMore(newProducts.length >= 12)
-
-            } catch (err) {
-
-                console.log('Ошибка вывода продуктов:', err)
-
-            } finally {
-
-                setIsLoading(false)
-
-            }
-        }
-
-        fetchProducts()
-
-    }, [
-        skip,
-        debouncedSearch,
-
-        filters.size,
-        filters.category,
-        filters.color,
-        filters.collection,
-    ])
-    useEffect(() => {
-        setProducts([])
-        setSkip(0)
-        setHasMore(true)
-    }, [debouncedSearch, filters])
-
-    useEffect(() => {
-        console.log(filters)
-    }, [filters])
   return (
     <div className={styles.productsWrapper}>
-      <Filters
-          filters={filters}
-          setFilters={setFilters}
-      />
+      <Filters filters={filters} setFilters={setFilters} />
       <div className={styles.content}>
         <div className={styles.searchWrapper}>
           <h3>Products</h3>
-          <Search
-            value={querySearch}
-            setQuerySearch={setQuerySearch}
-          />
+          <Search value={querySearch} setQuerySearch={setQuerySearch} />
         </div>
         <div className={styles.productsList}>
-          {products.length !== 0
-          ? (products.map((product) => (
+          {products.map(product => (
             <ProductCard
               product={product}
               key={product.id}
               variant="catalog"
             />
-          )))
-            :  <div className={styles.hintSearch}>Products not yet</div>
-          }
+          ))}
+          {isLoading && <p className={styles.hintSearch}>Loading...</p>}
+          {!isLoading && products.length === 0 && (
+            <div className={styles.hintSearch}>Products not found</div>
+          )}
         </div>
-          <div ref={observerRef}></div>
-          {isLoading && <p>Loading...</p>}
+        <div ref={observerRef} />
       </div>
     </div>
-  );
-};
+  )
+}

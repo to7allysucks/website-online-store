@@ -1,100 +1,71 @@
-import { useEffect, useMemo, useState } from "react";
-import { NavLink } from "react-router-dom";
-import { ROUTES } from "../../../shared/config/routes";
-import { ProductCard } from "../../../entities/product";
+import {useEffect, useMemo, useState} from "react";
+import {NavLink, useLoaderData} from "react-router-dom";
+import {ROUTES} from "../../../shared/config/routes";
+import {ProductCard} from "../../../entities/product";
 import styles from "./CartPage.module.scss";
+import {useCartStore} from "../../../features/cart/model/cartStore.js";
 
 const CartPage = () => {
+  const {
+    items,
+    total,
+    isLoading,
+    fetchCart,
+    removeItem,
+    updateItem
+  } = useCartStore()
 
-    const MOCK_PRODUCTS = [
-    {
-      id:'1',
-      title: 'Embroidered Seersucker Shirt',
-      material: 'V-Neck',
-      price: 99,
-      category: 'T-Shirt',
-      colors: ['white','red','blue'],
-      size : 'L',
-      images: [{url: 'https://placehold.co/300x300', is_main: true}]
-    },
-    {
-      id:'1',
-      title: 'Embroidered Seersucker Shirt',
-      material: 'V-Neck',
-      price: 99,
-      category: 'T-Shirt',
-      colors: ['white','red','blue'],
-      size : 'L',
-      images: [{url: 'https://placehold.co/300x300', is_main: true}]
-    },
-    {
-      id:'1',
-      title: 'Embroidered Seersucker Shirt',
-      material: 'V-Neck',
-      price: 99,
-      category: 'T-Shirt',
-      colors: ['white','red','blue'],
-      size : 'L',
-      images: [{url: 'https://placehold.co/300x300', is_main: true}]
-    },
-    {
-      id:'1',
-      title: 'Embroidered Seersucker Shirt',
-      material: 'V-Neck',
-      price: 99,
-      category: 'T-Shirt',
-      colors: ['white','red','blue'],
-      size : 'L',
-      images: [{url: 'https://placehold.co/300x300', is_main: true}]
-    },
-    {
-      id:'1',
-      title: 'Embroidered Seersucker Shirt',
-      material: 'V-Neck',
-      price: 99,
-      category: 'T-Shirt',
-      colors: ['white','red','blue'],
-      size : 'L',
-      images: [{url: 'https://placehold.co/300x300', is_main: true}]
-    },
-  ]
-
-  const [totalPrice, setTotalPrice] = useState(0)
   const [shipping, setShipping] = useState(10)
-  const [isCheck, setIscheck] = useState(true)
-  const [products, setProducts] = useState(MOCK_PRODUCTS)
+  const [isCheck, setIsCheck] = useState(false)
 
-  const setCheckedToggle = ()=> {
+    const setCheckedToggle = () => {
     if (isCheck === false) {
-      setIscheck(true)
-      
+      setIsCheck(true)
+
     } else if (isCheck === true) {
-      setIscheck(false)
+      setIsCheck(false)
     }
   };
 
-
-
-  const calcTotalPrice = useMemo(() => {
-   let price = products.reduce((currentPrice, product) => product.price + currentPrice,0)
-   return price
-  }, [products])
-
   useEffect(() => {
-    setTotalPrice(calcTotalPrice)
-  }, [calcTotalPrice])
+    fetchCart()
+  }, [])
 
 
+  const totalPrice = useMemo(() =>
+    items.reduce((currentPrice, item) => (item.quantity * item.variant.product.price) + currentPrice, 0),
+    [items])
+
+  console.log(items)
+
+  if (isLoading) return <p>Loading...</p>
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
         <div className={styles.variants}>
-          <navLink to={ROUTES.CART} className={`${styles.active} ${styles.navLink}`}>shopping bag</navLink>
-          <navLink to={ROUTES.FAVORITES} className={styles.navLink}>favorites</navLink>
+          <NavLink to={ROUTES.CART}
+                   className={`${styles.active} ${styles.navLink}`}>shopping bag
+          </NavLink>
+          {/*<NavLink to={ROUTES.FAVORITES} className={styles.navLink}>favorites*/}
+          {/*</NavLink>*/}
         </div>
         <div className={styles.content}>
           <div className={styles.productsList}>
-          {products.map(product => <ProductCard product={product} key={product.id} variant="cart"/>)}
+            {items.length === 0
+              ? <p>Cart is entry</p>
+              :
+              items.map(
+                item => <ProductCard product={item.variant.product}
+                                     key={item.id}
+                                     variant="cart"
+                                     onRemove={() => removeItem(item.id)}
+                                     onQuantityChange={(qty) => updateItem(item.id, qty)}
+                                     quantity={item.quantity}
+
+                />)
+
+            }
+
           </div>
           <div className={styles.totalCard}>
             <h4>order summary</h4>
@@ -110,24 +81,24 @@ const CartPage = () => {
               <div className={styles.separator}></div>
               <h4 className={styles.totalEnter}>
                 <div>
-                total 
-                <p>(TAX INCL.)</p>
+                  total
+                  <p>(TAX INCL.)</p>
                 </div>
                 <h4>{`${totalPrice + shipping}$`}</h4>
               </h4>
               <div className={styles.agreement}>
-                <input 
-                name="agreement" 
-                type="checkbox"
-                onClick={setCheckedToggle}
+                <input
+                  name="agreement"
+                  type="checkbox"
+                  onClick={setCheckedToggle}
                 ></input>
-                <label 
-                htmlFor="agreement"
+                <label
+                  htmlFor="agreement"
                 >I agree to the Terms and Conditions</label>
               </div>
-              <button 
-              className={styles.btnContinue} 
-              disabled={isCheck}
+              <button
+                className={styles.btnContinue}
+                disabled={!isCheck}
               >continue
               </button>
             </div>

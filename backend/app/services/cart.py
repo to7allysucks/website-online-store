@@ -19,9 +19,8 @@ class CartService:
                 selectinload(CartItem.variant)
                 .selectinload(ProductVariant.product)
                 .options(
-                    selectinload(Product.images),
+                selectinload(Product.images),
                     selectinload(Product.category),
-                    selectinload(Product.collection)
                 )
             )
         )
@@ -30,10 +29,34 @@ class CartService:
         cart_items = result.scalars().all()
 
         total_price = 0
-        for item in cart_items:
-            total_price += item.quantity * float(item.variant.product.price)
+        items = []
 
-        return cart_items, total_price
+        for item in cart_items:
+            product = item.variant.product
+            total_price += item.quantity * float(product.price)
+
+            main_image = next(
+                (img.url for img in product.images if img.is_main),
+                None
+            )
+
+            items.append({
+                'id': item.id,
+                'quantity': item.quantity,
+                'variant': {
+                    'id': item.variant.id,
+                    'color': item.variant.color,
+                    'size': item.variant.size,
+                    'product': {
+                        'id': product.id,
+                        'name': product.name,
+                        'price': float(product.price),
+                        'main_image': main_image,
+                    }
+                }
+            })
+
+        return items, total_price
 
     @staticmethod
     async def add_item_to_cart(db: AsyncSession, user_id: UUID, payload: CartItemCreate):
