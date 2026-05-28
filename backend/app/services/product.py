@@ -37,7 +37,7 @@ class ProductService:
             if filters.color is not None:
                 query = query.where(ProductVariant.color == filters.color)
             if filters.size is not None:
-                query = query.where(ProductVariant.size == filters.size)
+                query = query.where(ProductVariant.size == filters.size.upper())
 
         query = query.distinct()
         subq = query.subquery()

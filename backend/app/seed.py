@@ -143,8 +143,7 @@ async def seed():
             (p["id"], p["name"], p["desc"], p["price"], p["cat"], collections[0].id, p["gender"])
             for p in raw_products
         ]
-
-        # Запись капсом с приведением к вашему новому типу ENUM
+        
         await asyncpg_conn.executemany(
             """
             INSERT INTO public.products (id, name, description, price, category_id, collection_id, gender)
@@ -163,7 +162,7 @@ async def seed():
         image_counter = 1
 
         for p in raw_products:
-            product_colors = [BLACK, WHITE, choice([BLUE, GREEN])]
+            product_colors = [WHITE, BLACK, choice([BLUE, GREEN])]
 
             if p["gender"] == 'KID':
                 sizes = ['S', 'M']
@@ -188,9 +187,30 @@ async def seed():
                     variants_params.append(
                         (v_id, p["id"], size, color, randint(0, 30))
                     )
+                is_tshirt = 'Tee' in p["name"] or 'T-Shirt' in p["name"]
+                is_jeans = 'Jeans' in p['name']
+                is_jacket = 'Jacket' in p['name']
+                is_shirt = 'Shirt' in p['name']
+                is_shorts = 'Shorts' in p['name']
+                if is_tshirt and color == BLACK:
+                    img_url = 'https://sun9-61.userapi.com/s/v1/ig2/k_aep66-XsTF_axlEZmnbRR_jeexhG2rEbjoGgSypUR3DhQ3c1048k-4H68D17jSaQ6ci7Xc0nM3lt5OvgwMWysA.jpg?quality=95&as=32x44,48x66,72x99,108x148,160x219,240x329,360x493,480x658,540x740,640x877,720x987,747x1024&from=bu&u=fisjq8JYDdqw3mWr2nvBO43ie2G8FPdz4fRpQastrCA&cs=747x0'
+                elif is_shorts and color == BLACK:
+                    img_url = 'https://sun9-20.userapi.com/s/v1/ig2/4l8ScmRD-ZA6cmvNwtc-wgCLGjwBrRnHHJjw8ULJWXWPg0bjKRkBIc_E6pAG-VzLDh7_J8BS8I8jij6am5i5f_gP.jpg?quality=95&as=32x43,48x64,72x96,108x144,160x213,240x320,360x480,480x640,540x720,640x853,720x960,810x1080&from=bu&u=r1oK7sASWzv-1hVivHhpHIyKSB7PdS4IA4h3MoQ7LtQ&cs=810x0'
+                elif is_shirt and color == WHITE:
+                    img_url = 'https://solidaykids.ru/upload/iblock/9c2/q27l5m0x76004tehgxvmpjvaf1wm621f/rubashka_oversayz_school.jpg'
+                elif is_jacket and color == WHITE:
+                    img_url = 'https://byme.ru/images/detailed/125/2-38904_40013-034-20.jpg'
+                elif is_jeans and color == WHITE:
+                    img_url = 'https://sun9-33.userapi.com/s/v1/ig2/HHB7FtnruJqNBt2prC7ipvXOv-k2qp3Sn_DD2HukDwgG-uQNxSeokwTp-Vyaw8lYg86O_XbpR3Vjixxy00AhBNbM.jpg?quality=95&as=32x43,48x64,72x96,108x144,160x213,240x320,360x480,480x640,540x720,640x853,720x960,810x1080&from=bu&u=nX4_FNdVMXu_t28JMrp8Ht_mHh_KncA9f7e4TyKwy-8&cs=810x0'
+                elif is_jeans and color == BLUE:
+                    img_url = 'https://sun9-63.userapi.com/s/v1/ig2/jSaE14L3Eudw2414t-nyX4WK77-CWwSBtSyIYTKbQGvSRcwvNCBjN7TyHMVDPWd1sf2O3gcIFr2uqPB4gbWAIwNG.jpg?quality=95&as=32x43,48x64,72x96,108x145,160x214,240x321,360x482,480x643,540x723,640x857,720x964,896x1200&from=bu&u=Qd9OBNlGQShSmx7t3-H48pZeDveQLE48cJPX9rCIcus&cs=896x0'
+                elif is_tshirt and color == WHITE:
+                    img_url = 'https://sun9-23.userapi.com/s/v1/ig2/-yxoLeyJ1C0T4RCaqiPIg-Ovees1mJsz-fjtBScOwX-NLLpofc1wCDN1ZQ6vYr3uD-sfeuIeyA0B6ykkTdOgZ2c8.jpg?quality=95&as=32x44,48x66,72x99,108x148,160x219,240x329,360x493,480x658,540x740,640x877,720x987,864x1184&from=bu&u=95g1U4TbYh1tNUL91bAQLH40y-I-BC_Q1x6X6C21hVc&cs=864x0'
+                else:
+                    img_url = f"https://picsum.photos/id/{image_id}/300/400?grayscale&blur=8"
 
                 images_params.append(
-                    (uuid.uuid4(), p["id"], first_variant_id, f"https://picsum.photos{image_id}/600/800", is_main_value)
+                    (uuid.uuid4(), p["id"], first_variant_id, img_url, is_main_value)
                 )
 
         print("Пакетное сохранение вариантов...")

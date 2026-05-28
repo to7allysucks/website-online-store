@@ -19,7 +19,7 @@ export const NewCollections = () => {
     api.get('/products',
         {
           params: {
-            limit: 5
+            limit: 20
           }
         }
     )
