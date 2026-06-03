@@ -1,9 +1,11 @@
-import {useEffect, useMemo, useState} from "react";
-import {NavLink, useLoaderData} from "react-router-dom";
-import {ROUTES} from "../../../shared/config/routes";
-import {ProductCard} from "../../../entities/product";
+import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
+import { ROUTES } from "../../../shared/config/routes";
+import { ProductCard } from "../../../entities/product";
 import styles from "./CartPage.module.scss";
-import {useCartStore} from "../../../features/cart/model/cartStore.js";
+import { useCartStore } from "../../../features/cart/model/cartStore.js";
+import { formatPrice, calculateTotal } from "../../../shared/lib/formatters.js";
+import { MESSAGES } from "../../../shared/config/constants.js";
 
 const CartPage = () => {
   const {
@@ -15,30 +17,16 @@ const CartPage = () => {
     updateItem
   } = useCartStore()
 
-  const [shipping, setShipping] = useState(10)
+  const [shipping] = useState(10)
   const [isCheck, setIsCheck] = useState(false)
-
-    const setCheckedToggle = () => {
-    if (isCheck === false) {
-      setIsCheck(true)
-
-    } else if (isCheck === true) {
-      setIsCheck(false)
-    }
-  };
 
   useEffect(() => {
     fetchCart()
-  }, [])
+  }, [fetchCart])
 
+  const totalPrice = calculateTotal(items)
 
-  const totalPrice = useMemo(() =>
-    items.reduce((currentPrice, item) => (item.quantity * item.variant.product.price) + currentPrice, 0),
-    [items])
-
-  console.log(items)
-
-  if (isLoading) return <p>Loading...</p>
+  if (isLoading) return <p>{MESSAGES.LOADING}</p>
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
@@ -51,32 +39,31 @@ const CartPage = () => {
         </div>
         <div className={styles.content}>
           <div className={styles.productsList}>
-            {items.length === 0
-              ? <p>Cart is entry</p>
-              :
-              items.map(
-                item => <ProductCard product={item.variant.product}
-                                     key={item.id}
-                                     variant="cart"
-                                     onRemove={() => removeItem(item.id)}
-                                     onQuantityChange={(qty) => updateItem(item.id, qty)}
-                                     quantity={item.quantity}
-
-                />)
-
-            }
-
+            {items.length === 0 ? (
+              <p>{MESSAGES.CART_EMPTY}</p>
+            ) : (
+              items.map(item => (
+                <ProductCard
+                  product={item.variant.product}
+                  key={item.id}
+                  variant="cart"
+                  onRemove={() => removeItem(item.id)}
+                  onQuantityChange={(qty) => updateItem(item.id, qty)}
+                  quantity={item.quantity}
+                />
+              ))
+            )}
           </div>
           <div className={styles.totalCard}>
             <h4>order summary</h4>
             <div className={styles.contentCard}>
               <div className={styles.contentInner}>
                 <span>Subtotal</span>
-                <span>{`${totalPrice}$`}</span>
+                <span>{formatPrice(totalPrice)}</span>
               </div>
               <div className={styles.contentInner}>
                 <span>Shipping</span>
-                <span>{`${shipping}$`}</span>
+                <span>{formatPrice(shipping)}</span>
               </div>
               <div className={styles.separator}></div>
               <h4 className={styles.totalEnter}>
@@ -84,17 +71,18 @@ const CartPage = () => {
                   total
                   <p>(TAX INCL.)</p>
                 </div>
-                <h4>{`${totalPrice + shipping}$`}</h4>
+                <h4>{formatPrice(totalPrice + shipping)}</h4>
               </h4>
               <div className={styles.agreement}>
                 <input
                   name="agreement"
                   type="checkbox"
-                  onClick={setCheckedToggle}
-                ></input>
-                <label
-                  htmlFor="agreement"
-                >I agree to the Terms and Conditions</label>
+                  checked={isCheck}
+                  onChange={(e) => setIsCheck(e.target.checked)}
+                />
+                <label htmlFor="agreement">
+                  I agree to the Terms and Conditions
+                </label>
               </div>
               <button
                 className={styles.btnContinue}

@@ -1,15 +1,14 @@
-import {api} from "../../../shared/api/instanse.js";
-
+import { api } from "../../../shared/api/instanse.js";
+import { API_ENDPOINTS } from "../../../shared/api/endpoints.js";
 
 export const cartApi = {
-
   getCart: async () => {
-    const res = await api.get('/cart')
+    const res = await api.get(API_ENDPOINTS.CART)
     return res.data
   },
 
-  addToCart: async (variantId, quantity=1) => {
-    const res = await api.post('/cart/items',{
+  addToCart: async (variantId, quantity = 1) => {
+    const res = await api.post(API_ENDPOINTS.CART_ITEMS, {
       variant_id: variantId,
       quantity
     })
@@ -17,18 +16,17 @@ export const cartApi = {
   },
 
   updateQuantity: async (itemId, quantity) => {
-    const res = await api.patch(`/cart/items/${itemId}`, {quantity})
+    const res = await api.patch(API_ENDPOINTS.CART_ITEM(itemId), { quantity })
     return res.data
   },
 
   clearCart: async () => {
-    const res = await api.delete('/cart/')
+    const res = await api.delete(API_ENDPOINTS.CART)
     return res.data
   },
 
-
   removeItem: async (itemId) => {
-    const res = await api.delete(`/cart/items/${itemId}`)
+    const res = await api.delete(API_ENDPOINTS.CART_ITEM(itemId))
     return res.data
   }
 }

@@ -8,14 +8,13 @@ import Cart from '../../../shared/assets/icons/cart.svg';
 import styles from './Header.module.scss'
 
 const Header = () => {
-
   const { isOpen, toggle, close } = useBurgerMenu()
 
   return (
     <>
       <header className={styles.header}>
         <div className={styles.nav}>
-          <button className={styles.burger} onClick={toggle}>
+          <button className={styles.burger} onClick={toggle} aria-label="Toggle menu">
             <span></span>
             <span></span>
             <span></span>
@@ -25,18 +24,24 @@ const Header = () => {
           <NavLink className={styles.navItem} to={ROUTES.PRODUCTS}>New</NavLink>
         </div>
 
-        <div className={styles.logo}><img src={Logo} alt="logo"/></div>
+        <Link to={ROUTES.HOME} className={styles.logo}>
+          <img src={Logo} alt="logo" />
+        </Link>
 
         <div className={styles.navActions}>
-          <Link  to={ROUTES.CART} className={styles.like}><img src={Like} alt="like"/></Link>
+          <Link to={ROUTES.CART} className={styles.like} aria-label="Favorites">
+            <img src={Like} alt="favorites" />
+          </Link>
           <Link to={ROUTES.CART} className={styles.cartWrapper}>
             <span>Cart</span>
-            <div><img src={Cart} alt="cart"/></div>
+            <div><img src={Cart} alt="cart" /></div>
           </Link>
-          <Link to={ROUTES.PROFILE} className={styles.profile}><img src={Profile} alt="profile"/></Link>
+          <Link to={ROUTES.PROFILE} className={styles.profile} aria-label="Profile">
+            <img src={Profile} alt="profile" />
+          </Link>
         </div>
       </header>
-      <BurgerMenu isOpen={isOpen} onClose={close}/>
+      <BurgerMenu isOpen={isOpen} onClose={close} />
     </>
   );
 };

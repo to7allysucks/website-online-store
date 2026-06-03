@@ -1,66 +1,39 @@
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { FreeMode, Thumbs } from 'swiper/modules'
-import { useRef, useState, useEffect } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useRef, useState } from 'react'
 import styles from './ProductPage.module.scss'
 import likeImg from '../../../shared/assets/icons/like.svg'
-import { productApi } from '../../../shared/api/productApi.js'
-import { useCartStore } from '../../../features/cart/model/cartStore.js'
-import { useAuthStore } from '../../../features/auth/model/authStore.js'
-import { ROUTES } from '../../../shared/config/routes.js'
+import { useProduct } from '../model/useProduct.js'
+import { useAddToCart } from '../../../features/cart/model/useAddToCart.js'
+import { formatPrice } from '../../../shared/lib/formatters.js'
+import { MESSAGES, LABELS } from '../../../shared/config/constants.js'
 
 const ProductPage = () => {
-  const { id } = useParams() // берём id из URL /products/:id
-  const navigate = useNavigate()
   const swiperRef = useRef(null)
   const [thumbsSwiper, setThumbsSwiper] = useState(null)
 
-  const [product, setProduct] = useState(null)
-  const [isLoading, setIsLoading] = useState(true)
+  const {
+    product,
+    isLoading,
+    selectedColor,
+    setSelectedColor,
+    selectedSize,
+    setSelectedSize,
+    uniqueColors,
+    uniqueSizes,
+    selectedVariant
+  } = useProduct()
 
-  // выбранные цвет и размер
-  const [selectedColor, setSelectedColor] = useState(null)
-  const [selectedSize, setSelectedSize] = useState(null)
-
-  const { addItem } = useCartStore()
-  const { isAuth } = useAuthStore()
-
-  useEffect(() => {
-    productApi.getProduct(id)
-      .then(data => {
-        setProduct(data)
-        if (data.variants?.length > 0) {
-          setSelectedColor(data.variants[0].color)
-          setSelectedSize(data.variants[0].size)
-        }
-      })
-      .catch(err => console.error('Ошибка загрузки товара:', err))
-      .finally(() => setIsLoading(false))
-  }, [id])
+  const { addToCart } = useAddToCart()
 
   const handleAddToCart = async () => {
-    if (!isAuth) {
-      navigate(ROUTES.AUTH)
-      return
+    if (selectedVariant) {
+      await addToCart(selectedVariant.id)
     }
-
-    const variant = product.variants?.find(
-      v => v.color === selectedColor && v.size === selectedSize
-    )
-
-    if (!variant) {
-      console.error('Вариант не найден')
-      return
-    }
-
-    await addItem(variant.id, 1)
   }
 
-  const uniqueColors = [...new Set(product?.variants?.map(v => v.color))]
-  const uniqueSizes = [...new Set(product?.variants?.map(v => v.size))]
-
-  if (isLoading) return <div>Loading...</div>
-  if (!product) return <div>Товар не найден</div>
+  if (isLoading) return <div>{MESSAGES.LOADING}</div>
+  if (!product) return <div>{MESSAGES.PRODUCT_NOT_FOUND}</div>
 
   return (
     <div className={styles.wrapper}>
@@ -100,10 +73,10 @@ const ProductPage = () => {
         </Swiper>
       </div>
 
-      <div className={styles.cardProductWrapper}>
+        <div className={styles.cardProductWrapper}>
         <div className={styles.cardDescription}>
           <h4>{product.name}</h4>
-          <span>{product.price}$</span>
+          <span>{formatPrice(product.price)}</span>
           <p>{product.category?.name}</p>
           <div>{product.description}</div>
         </div>
@@ -113,28 +86,29 @@ const ProductPage = () => {
             <span>Color</span>
             <div className={styles.paramsList}>
               {uniqueColors.map(color => (
-                <div
+                <button
                   key={color}
                   style={{ backgroundColor: color }}
                   className={`${styles.squareParams} ${selectedColor === color ? styles.selected : ''}`}
                   onClick={() => setSelectedColor(color)}
+                  aria-label={`Select color ${color}`}
                 />
               ))}
             </div>
           </div>
 
-          {/* выбор размера */}
           <div className={styles.cardParams}>
             <span>Size</span>
             <div className={styles.paramsList}>
               {uniqueSizes.map(size => (
-                <div
+                <button
                   key={size}
                   className={`${styles.squareParams} ${selectedSize === size ? styles.selected : ''}`}
                   onClick={() => setSelectedSize(size)}
+                  aria-label={`Select size ${size}`}
                 >
                   {size}
-                </div>
+                </button>
               ))}
             </div>
           </div>
@@ -145,9 +119,9 @@ const ProductPage = () => {
           </button>
         </div>
 
-        <div className={styles.btnLike}>
-          <img src={likeImg} alt="like" />
-        </div>
+        <button className={styles.btnLike} aria-label={LABELS.FAVORITES}>
+          <img src={likeImg} alt={LABELS.FAVORITES} />
+        </button>
       </div>
     </div>
   )
