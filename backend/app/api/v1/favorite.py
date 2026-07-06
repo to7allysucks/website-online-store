@@ -8,9 +8,9 @@ from models.user import User
 from schemas.favorite import FavoriteResponse, FavoriteCreate
 from services.favorite import FavoriteService
 
-router = APIRouter(prefix='/api/favorites', tags=['Favorites'])
+router = APIRouter(prefix='/favorites', tags=['Favorites'])
 
-@router.get('/', response_model=list[FavoriteResponse])
+@router.get('', response_model=list[FavoriteResponse])
 async def get_favorites(
         db: AsyncSession = Depends(get_db),
         current_user: User = Depends(get_current_user)
@@ -18,7 +18,7 @@ async def get_favorites(
     items = await FavoriteService.get_user_favorites(db=db, user_id=current_user.id)
     return items
 
-@router.post('/')
+@router.post('')
 async def add_to_favorites(
         payload: FavoriteCreate,
         db: AsyncSession = Depends(get_db),

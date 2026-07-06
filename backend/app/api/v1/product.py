@@ -6,9 +6,9 @@ from core.database import get_db
 from schemas.product import ProductFilterParams, ProductListResponse, ProductDetailResponse
 from services.product import ProductService
 
-router = APIRouter(prefix='/api/products', tags=['Products'])
+router = APIRouter(prefix='/products', tags=['Products'])
 
-@router.get('/', response_model=ProductListResponse)
+@router.get('', response_model=ProductListResponse)
 async def get_products(
     filters: ProductFilterParams = Depends(),
     db: AsyncSession = Depends(get_db)

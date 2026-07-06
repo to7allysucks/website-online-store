@@ -8,9 +8,9 @@ from models.user import User
 from schemas.cart import CartResponse, CartItemCreate, CartItemUpdate
 from services.cart import CartService
 
-router = APIRouter(prefix='/api/cart', tags=['Cart'])
+router = APIRouter(prefix='/cart', tags=['Cart'])
 
-@router.get('/', response_model=CartResponse)
+@router.get('', response_model=CartResponse)
 async def get_cart(
         db: AsyncSession = Depends(get_db),
         current_user: User = Depends(get_current_user)

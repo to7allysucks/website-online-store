@@ -11,7 +11,7 @@ from schemas.token import Token
 from schemas.user import UserRegister, UserLogin, UserResponse
 from datetime import datetime, timedelta, timezone
 
-router = APIRouter(prefix='/api/auth', tags=['Auth'])
+router = APIRouter(prefix='/auth', tags=['Auth'])
 
 @router.post('/register', response_model=UserResponse)
 async def register(data: UserRegister, db: AsyncSession = Depends(get_db)):
